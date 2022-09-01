@@ -1,23 +1,27 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { Signup } from './Signup'
-import { Dashboard } from './Dashboard'
-import { AuthProvider } from '../contexts/Auth'
-import { Login } from './Login'
-import { PrivateRoute } from './PrivateRoute'
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-export function App() {
+const App = () => {
+  const [query, setQuery] = useState('');
+  const [data, setData] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(``);
+      setData(res.data);
+    };
+  }, [query]);
+
   return (
     <div>
-      <h1>supabase-auth-react</h1>
-      <Router>
-        <AuthProvider>
-          <Switch>
-            <PrivateRoute exact path="/" component={Dashboard} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/login" component={Login} />
-          </Switch>
-        </AuthProvider>
-      </Router>
+      <input
+        className="search"
+        placeholder="Search..."
+        onChange={ (e) => setQuery(e.target.value.toLowerCase())}
+      />
+      {/* {<Table data={ data } />} */}
     </div>
   )
 }
+
+export default App;

@@ -1,11 +1,25 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 
-import { App } from './components/App'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+import Login from './components/Authentication/Login'
+import Signup from './components/Authentication/Signup'
+import CoinSearch from './components/CoinSearch'
+import Home from './components/Home'
+
+const routes = (
+  <Router>
+      <Routes>
+          <Route path="/" element={ <Home /> } />
+          <Route path="/coin" element={ <CoinSearch /> } />
+          <Route path="/login" element={ <Login /> } />
+          <Route path="/signup" element={ <Signup /> } />
+      </Routes>
+  </Router>
 )
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  routes
+);
