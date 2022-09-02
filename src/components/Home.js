@@ -19,18 +19,56 @@ const Home = () => {
             <table>
                 <tbody>
                     <tr>
-                        <th>#</th>
-                        <th>Coin</th>
-                        <th>Price</th>
-                        <th>1hr</th>
-                        <th>24hr</th>
-                        <th>7d</th>
-                        <th>24hr Volume</th>
-                        <th>Mkt Cap</th>
-                        <th>Last 7 days</th>
+                        <th>
+                            <button>
+                               # 
+                            </button>
+                        </th>
+                        <th>
+                            <button>
+                                Coin
+                            </button>
+                        </th>
+                        <th>
+                            <button>
+                                Price
+                            </button>
+                        </th>
+                        <th>
+                            <button>
+                                1hr
+                            </button>
+                        </th>
+                        <th>
+                            <button>
+                                24hr
+                            </button>
+                        </th>
+                        <th>
+                            <button>
+                                7d
+                            </button>
+                        </th>
+                        <th>
+                            <button>
+                                24hr Volume
+                            </button>
+                        </th>
+                        <th>
+                            <button>
+                                Mkt Cap
+                            </button>
+                        </th>
+                        <th>
+                            <button>
+                                Last 7 days
+                            </button>
+                        </th>
                     </tr>
                 </tbody>
             </table>
+
+            <hr />
 
         </div>
     )

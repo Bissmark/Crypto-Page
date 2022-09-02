@@ -12,8 +12,8 @@ const Signup = () => {
 //   const { signUp } = useAuth()
 //   //const history = useHistory()
 
-//   async function handleSubmit(e) {
-//     e.preventDefault()
+  async function _handleSubmit(e) {
+    e.preventDefault()
 
 //     const email = emailRef.current.value
 //     const password = passwordRef.current.value
@@ -23,11 +23,11 @@ const Signup = () => {
 //     if (error) return setError(error)
 
 //     //history.push('/')
-  //}
+  }
 
   return (
     <div>
-      <form>
+      <form onSubmit={_handleSubmit}>
         {/* <div>{error && JSON.stringify(error)}</div> */}
 
         <label htmlFor="input-email">Email</label>

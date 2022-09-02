@@ -1,26 +1,17 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
+import { Router } from "express";
+import { Routes, Route } from "react-router-dom";
 
 const App = () => {
-  const [query, setQuery] = useState('');
-  const [data, setData] = useState('');
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get(``);
-      setData(res.data);
-    };
-  }, [query]);
-
   return (
-    <div>
-      <input
-        className="search"
-        placeholder="Search..."
-        onChange={ (e) => setQuery(e.target.value.toLowerCase())}
-      />
-      {/* {<Table data={ data } />} */}
-    </div>
+    <Router history={ history }>
+    <Routes>
+        <Route exact path="/" element={ <Home /> } />
+        <Route path="/coin" element={ <CoinSearch /> } />
+        <Route path="/login" element={ <Login /> } />
+        <Route path="/signup" element={ <Signup /> } />
+    </Routes> 
+  </Router>
   )
 }
 

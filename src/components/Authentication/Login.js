@@ -1,49 +1,48 @@
-import { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
-
-import { useAuth } from '../../contexts/Auth'
+import React from 'react';
+import axios from 'axios';
+import { SetAuthToken } from './SetAuthToken';
 
 const Login = () => {
-  const emailRef = useRef()
-  const passwordRef = useRef()
+  const handleSubmit = (email, password) => {
+    const loginPayLoad = {
+        email: 'ceege@reqres.in',
+        password: 'chicken'
+    }
 
-//   const [error, setError] = useState(null)
+    axios.post("https://reqres.in/api/login", loginPayLoad)
+        .then( response => {
+            const token = response.data.token;
+            localStorage.setItem('token', token);
+            SetAuthToken(token);
 
-//   const { signIn } = useAuth()
-//   //const history = useHistory()
-
-//   async function handleSubmit(e) {
-//     e.preventDefault()
-
-//     const email = emailRef.current.value
-//     const password = passwordRef.current.value
-
-//     const { error } = await signIn({ email, password })
-
-//     if (error) return setError(error)
-
-//     //history.push('/')
-//   }
+            window.location.href = '/'
+        })
+        .catch(err => console.log(err));
+}
 
   return (
     <div>
-      <form>
+      <form
+       onSubmit={(e) => {
+        e.preventDefault();
+        const [email, password] = e.target.children;
+        handleSubmit(email, password);
+       }}>
         {/* <div>{error && JSON.stringify(error)}</div> */}
 
-        <label htmlFor="input-email">Email</label>
-        <input id="input-email" type="email" ref={emailRef} />
-
-        <label htmlFor="input-password">Password</label>
-        <input id="input-password" type="password" ref={passwordRef} />
+        <label for="email">Email</label><br />
+        <input type="email" id="email" name="email"/><br />
+        <label for="password">Password</label><br />
+        <input type="password" id="password" name="password"/><br></br>
 
         <br />
 
-        <button type="submit">Login</button>
+        <input type="submit" value="Submit" />
       </form>
       <br />
-      <p>
+      {/* <p>
         Don't have an account? <Link to="/signup">Sign Up</Link>
-      </p>
+      </p> */}
     </div> 
   )
 }
