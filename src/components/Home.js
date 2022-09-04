@@ -1,75 +1,67 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import Coin from './Coin';
 
-const Home = () => {
+function Home() {
+    const [coins, setCoins] = useState([]);
+    const [search, setSearch] = useState('');
+  
+    const headers = ['rank', 'name', 'price', '24hr', 'volume', 'marketcap']
+  
+    useEffect(() => {
+      axios
+        .get(
+          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false'
+        )
+        .then(res => {
+          setCoins(res.data);
+          console.log(res.data);
+        })
+        .catch(error => console.log(error));
+    }, []);
+  
+    const handleChange = e => {
+      setSearch(e.target.value);
+    }
+  
+    const filteredCoins = coins.filter(coin =>
+      coin.name.toLowerCase().includes(search.toLowerCase())
+    );
+  
     return (
         <div>
             <nav>
-                <p>Logo | NightModeSwitch | <Link to="/login">Login</Link> | <Link to="/signup">Sign Up</Link></p>
+                <p>Logo | NightModeSwitch | <Link to="/login">Login</Link> | <Link to="/signup">Signup</Link> </p>
             </nav>
+            <div className="coin-app">
+                <div className="coin-search">
+                    <h1 className="coin-text">Search a currency</h1>
+                    <form>
+                        <input
+                        className="coin-input"
+                        type='text'
+                        onChange={ handleChange }
+                        placeholder='Search...'
+                        />
+                    </form>
+                    </div>
 
-            <hr />
-
-            <h1>Crypto Price by Market Cap</h1>
-
-            <input placeholder="Search..."/>
-
-            <hr />
-
-            <table>
-                <tbody>
-                    <tr>
-                        <th>
-                            <button>
-                               # 
-                            </button>
-                        </th>
-                        <th>
-                            <button>
-                                Coin
-                            </button>
-                        </th>
-                        <th>
-                            <button>
-                                Price
-                            </button>
-                        </th>
-                        <th>
-                            <button>
-                                1hr
-                            </button>
-                        </th>
-                        <th>
-                            <button>
-                                24hr
-                            </button>
-                        </th>
-                        <th>
-                            <button>
-                                7d
-                            </button>
-                        </th>
-                        <th>
-                            <button>
-                                24hr Volume
-                            </button>
-                        </th>
-                        <th>
-                            <button>
-                                Mkt Cap
-                            </button>
-                        </th>
-                        <th>
-                            <button>
-                                Last 7 days
-                            </button>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-
-            <hr />
-
+                    <table>
+                        <thead>
+                        <tr className="headers">
+                            { headers.map((header, i) => (
+                                <td key={ i }>{ header }</td>
+                            ))}
+                        </tr>  
+                        </thead>
+                        <tbody>
+                        {filteredCoins.map((coin, index) => (
+                            <Coin key="coin.id" coin={coin} index={index + 1} />
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }

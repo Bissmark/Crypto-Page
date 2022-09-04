@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { SetAuthToken } from './SetAuthToken';
 
 const Login = () => {
   const handleSubmit = (email, password) => {
@@ -13,7 +12,7 @@ const Login = () => {
         .then( response => {
             const token = response.data.token;
             localStorage.setItem('token', token);
-            SetAuthToken(token);
+            // SetAuthToken(token);
 
             window.location.href = '/'
         })
