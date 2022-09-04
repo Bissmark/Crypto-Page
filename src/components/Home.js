@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import Coin from './Coin';
+import { ThemeContext, themes } from "../contexts/ThemeContext";
 
 function Home() {
     const [coins, setCoins] = useState([]);
     const [search, setSearch] = useState('');
+    const [darkMode, setDarkMode] = useState(true);
   
     const headers = ['rank', 'name', 'price', '24hr', 'volume', 'marketcap']
   
@@ -32,7 +34,22 @@ function Home() {
     return (
         <div>
             <nav>
-                <p>Logo | NightModeSwitch | <Link to="/login">Login</Link> | <Link to="/signup">Signup</Link> </p>
+                <p>Logo | 
+                    <ThemeContext.Consumer>
+                    {({ changeTheme }) => (
+              <button
+                onClick={() => {
+                  setDarkMode(!darkMode);
+                  changeTheme(darkMode ? themes.light : themes.dark);
+                }}
+              >
+                <span>Night/Day</span>
+              </button>
+            )}
+                    
+                    </ThemeContext.Consumer> 
+                    
+                    | <Link to="/login">Login</Link> | <Link to="/signup">Signup</Link> </p>
             </nav>
             <div className="coin-app">
                 <div className="coin-search">
@@ -51,7 +68,7 @@ function Home() {
                         <thead>
                         <tr className="headers">
                             { headers.map((header, i) => (
-                                <td key={ i }>{ header }</td>
+                                <td key={ i } onClick={ () => console.log('lmao') }>{ header }</td>
                             ))}
                         </tr>  
                         </thead>
