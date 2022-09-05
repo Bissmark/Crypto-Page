@@ -32,6 +32,8 @@ const Coin = ({ coin }) => {
         <td>
             ${ coin.market_cap.toLocaleString() }
         </td>
+
+        {/* <Charts coinData={coin} />   */}
       </tr>
     );
   };

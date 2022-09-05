@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import moment from 'moment';
+import Charts from "./TestChart/Charts";
 
 
 const CoinPage = () => {
     const [coins, setCoins] = useState([]);
     const [isLoading, setLoading] = useState(true);
-    
-    console.log('lmao');
+
     const params = useParams();
 
     useEffect(() => { 
@@ -43,13 +43,10 @@ const CoinPage = () => {
             <p>Market Cap: ${coins.market_data.market_cap.usd.toLocaleString()}</p>
             <p>Circulating Supply: {coins.market_data.circulating_supply.toLocaleString()}</p>
             <p>Total Supply: {coins.market_data.total_supply.toLocaleString()}</p>
-            <p>Max Supply: {coins.market_data.max_supply.toLocaleString() }</p>
             <p>All-Time High: ${coins.market_data.ath.usd.toLocaleString()}</p>
             <p>All-Time High Data: {moment(coins.market_data.ath_date.usd).format('Do MMM YY') }</p>
             <p>All-Time Low: ${coins.market_data.atl.usd.toLocaleString()}</p>
             <p>All-Time Low Data: {moment(coins.market_data.atl_date.usd).format('Do MMM YY')}</p>
-
-        
         </div>
     )
 }
