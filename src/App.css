@@ -57,7 +57,7 @@ body {
   text-align: center;
 }
 
-body table, th, td {
+table, th, td {
   border: 1px solid white;
 }
 
@@ -76,4 +76,27 @@ nav {
 .white-content {
   background: #e4e4e4;
   color: black;
+}
+
+/* .white-content table, th, td {
+  border: 1px solid black;
+} */
+
+.link {
+  color: #FFF;
+}
+.link:hover {
+   color: #00F
+}
+
+.white-content .link {
+  color: black;
+}
+
+.white-content .link:hover {
+  color: #00F
+}
+
+.name {
+  display: inline;
 }

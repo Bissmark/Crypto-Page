@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import axios from 'axios';
 import Coin from './Coin';
-import { ThemeContext, themes } from "../contexts/ThemeContext";
 
-function Home() {
+const Home = () => {
     const [coins, setCoins] = useState([]);
     const [search, setSearch] = useState('');
-    const [darkMode, setDarkMode] = useState(true);
   
-    const headers = ['rank', 'name', 'price', '24hr', 'volume', 'marketcap']
-  
+    const headers = ['rank', 'name', 'price', '24hr', 'volume', 'marketcap'];
+
     useEffect(() => {
       axios
         .get(
@@ -18,7 +15,6 @@ function Home() {
         )
         .then(res => {
           setCoins(res.data);
-          console.log(res.data);
         })
         .catch(error => console.log(error));
     }, []);
@@ -30,27 +26,9 @@ function Home() {
     const filteredCoins = coins.filter(coin =>
       coin.name.toLowerCase().includes(search.toLowerCase())
     );
-  
+
     return (
         <div>
-            <nav>
-                <p>Logo | 
-                    <ThemeContext.Consumer>
-                    {({ changeTheme }) => (
-              <button
-                onClick={() => {
-                  setDarkMode(!darkMode);
-                  changeTheme(darkMode ? themes.light : themes.dark);
-                }}
-              >
-                <span>Night/Day</span>
-              </button>
-            )}
-                    
-                    </ThemeContext.Consumer> 
-                    
-                    | <Link to="/login">Login</Link> | <Link to="/signup">Signup</Link> </p>
-            </nav>
             <div className="coin-app">
                 <div className="coin-search">
                     <h1 className="coin-text">Search a currency</h1>
@@ -62,19 +40,18 @@ function Home() {
                         placeholder='Search...'
                         />
                     </form>
-                    </div>
-
-                    <table>
-                        <thead>
-                        <tr className="headers">
-                            { headers.map((header, i) => (
-                                <td key={ i } onClick={ () => console.log('lmao') }>{ header }</td>
-                            ))}
-                        </tr>  
-                        </thead>
-                        <tbody>
+                </div>
+                <table>
+                    <thead>
+                    <tr className="headers">
+                        { headers.map((header, i) => (
+                            <td key={ i } >{ header }</td>
+                        ))}
+                    </tr>  
+                    </thead>
+                    <tbody>
                         {filteredCoins.map((coin, index) => (
-                            <Coin key="coin.id" coin={coin} index={index + 1} />
+                        <Coin key={coin.id} coin={coin} index={index + 1} /> 
                         ))}
                     </tbody>
                 </table>
