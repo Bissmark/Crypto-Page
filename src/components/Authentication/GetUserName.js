@@ -15,7 +15,6 @@ const GetUserName = ({ name, setName }) => {
                 const doc = await getDocs(q);
                 const data = doc.docs[0].data();
                 setName(data.name);
-                console.log(data.name);
             }
             
         } catch (err) {

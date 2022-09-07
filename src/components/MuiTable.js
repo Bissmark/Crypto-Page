@@ -9,11 +9,14 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
+import StarIcon from '@mui/icons-material/Star';
+import { ThemeProvider } from 'react-bootstrap';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { visuallyHidden } from '@mui/utils';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { LineChart, Line, Tooltip, CartesianGrid, XAxis, YAxis } from 'recharts';
+import { LineChart, Line, Tooltip, YAxis } from 'recharts';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -86,6 +89,9 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
+          {/* <StarBorderIcon
+          sx={{color: 'white'}} 
+           /> */}
           <Checkbox 
             sx={{color: 'white'}}
             color="primary"
@@ -198,6 +204,15 @@ function EnhancedTable() {
   {props.payload.map(v => <p>{v.value}</p>)}
   </div> )
 
+  const theme = ThemeProvider({
+    props:{
+      MuiCheckbox:{
+        icon: <StarBorderIcon />,
+        checkedIcon:<StarIcon />
+      }
+    }
+  });
+
   return (
     <div>
       <div className="coin-search">
@@ -238,7 +253,6 @@ function EnhancedTable() {
                   const labelId = `enhanced-table-checkbox-${index}`;
                   const min = coin.sparkline_in_7d.price[0];
                   const max = coin.sparkline_in_7d.price[coin.sparkline_in_7d.price.length - 1];
-                  console.log(coin);
                   const priceIncrease = max > min ? true : false;
                   const coinPricingData = coin.sparkline_in_7d.price.map(value => {
                     return {"price": value.toFixed(5)}
@@ -254,14 +268,22 @@ function EnhancedTable() {
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
-                        <Checkbox 
+                        {/* <StarBorderIcon 
                           sx={{ color: 'white', fontFamily: 'Montserrat' }}
                           color="primary"
                           checked={isItemSelected}
                           inputProps={{
                             'aria-labelledby': labelId,
                           }}
-                        />
+                        /> */}
+                          <Checkbox 
+                            sx={{ color: 'white', fontFamily: 'Montserrat' }}
+                            color="primary"
+                            checked={isItemSelected}
+                            inputProps={{
+                              'aria-labelledby': labelId,
+                            }}
+                          />
                       </TableCell>
                       <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>{coin.market_cap_rank}</TableCell>
                       <TableCell align="left" sx={{ color: 'white', fontFamily: 'Montserrat' }}><img className='image-table' src={coin.image} /><Link to={coin.id}>{coin.name}</Link></TableCell>
