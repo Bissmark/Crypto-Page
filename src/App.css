@@ -179,3 +179,8 @@ a:hover {
 .image-name {
   display: block ruby;
 }
+
+.image-table {
+  height: 25px;
+  display: inline-block;
+}

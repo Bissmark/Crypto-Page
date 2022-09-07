@@ -238,6 +238,7 @@ function EnhancedTable() {
                   const labelId = `enhanced-table-checkbox-${index}`;
                   const min = coin.sparkline_in_7d.price[0];
                   const max = coin.sparkline_in_7d.price[coin.sparkline_in_7d.price.length - 1];
+                  console.log(coin);
                   const priceIncrease = max > min ? true : false;
                   const coinPricingData = coin.sparkline_in_7d.price.map(value => {
                     return {"price": value.toFixed(5)}
@@ -262,20 +263,20 @@ function EnhancedTable() {
                           }}
                         />
                       </TableCell>
-                      <TableCell align="right" sx={{ color: 'white', fontFamily: 'Montserrat' }}>{coin.market_cap_rank}</TableCell>
-                      <TableCell align="right" sx={{ color: 'white', fontFamily: 'Montserrat' }}><Link to={coin.id}>{coin.name}</Link></TableCell>
-                      <TableCell align="right" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.current_price.toLocaleString() }</TableCell>
+                      <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>{coin.market_cap_rank}</TableCell>
+                      <TableCell align="left" sx={{ color: 'white', fontFamily: 'Montserrat' }}><img className='image-table' src={coin.image} /><Link to={coin.id}>{coin.name}</Link></TableCell>
+                      <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.current_price.toLocaleString() }</TableCell>
                       <TableCell 
-                        align="right"
+                        align="center"
                         sx={ coin.price_change_percentage_24h > 0 ? {color: 'green'} : {color: 'red'}}>
                         { coin.price_change_percentage_24h.toFixed(2) }%
                       </TableCell>
-                      <TableCell align="right" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.total_volume.toLocaleString() }</TableCell>
-                      <TableCell align="right" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.market_cap.toLocaleString() }</TableCell>
+                      <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.total_volume.toLocaleString() }</TableCell>
+                      <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.market_cap.toLocaleString() }</TableCell>
                       <TableCell key={coin.name}>
                         <LineChart width={350} height={100} data={coinPricingData}>
                         <Line type="natural" dataKey="price" stroke={priceIncrease ? "#82ca9d" : "red"} dot={false} />
-                        <Tooltip content={ Toolip } cursor={ false } />
+                        <Tooltip content={ Toolip } cursor={ false } wrapperStyle={{ outline: 'none' }} />
                         <YAxis hide={true} domain={['dataMin', 'dataMax']} />
                         </LineChart> 
                       </TableCell>
