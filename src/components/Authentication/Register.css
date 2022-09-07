@@ -1,0 +1,42 @@
+.register {
+    height: 60vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register_container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: #dcdcdc;
+    padding: 30px;
+}
+
+.register_textBox {
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.register_btn {
+    padding: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border: none;
+    color: white;
+    background-color: black;
+}
+
+.register_google {
+    background-color: #4285f4;
+}
+
+.register div {
+    margin-top: 7px;
+}
+
+.login_register {
+    color: black;
+}

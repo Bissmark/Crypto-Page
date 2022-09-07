@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { LineChart, Line, CartesianGrid, Tooltip } from "recharts";
+// import moment from "moment";
 
 const Coin = ({ coin }) => {
-
     return (
       <tr>
+        <td>★</td>
         <td>{ coin.market_cap_rank }</td>
         <td>
             <img
@@ -32,8 +34,13 @@ const Coin = ({ coin }) => {
         <td>
             ${ coin.market_cap.toLocaleString() }
         </td>
-
-        {/* <Charts coinData={coin} />   */}
+        <td>
+            <LineChart width={150} height={100} data={coin.sparkline_in_7d.price}>
+                <Line type="monotone" dataKey="value" stroke="#8884d8" />
+                <CartesianGrid stroke="#ccc" />
+                <Tooltip />
+            </LineChart>
+        </td>
       </tr>
     );
   };

@@ -27,9 +27,9 @@ const Chart = ({ sparklineData }) => {
     .filter(data => data);
 
   return (
-    <LineChart width={200} height={100} data={formattedData}>
+    <LineChart width={150} height={100} data={formattedData}>
       <Line type="monotone" dataKey="value" stroke="#8884d8" />
-      <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+      <CartesianGrid stroke="#ccc" />
       <Tooltip />
     </LineChart>
   );

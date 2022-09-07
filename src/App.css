@@ -13,7 +13,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 64px;
 }
 
 .coin-search {
@@ -61,6 +60,10 @@ table, th, td {
   border: 1px solid white;
 }
 
+.CoinPageTable td {
+  display: inline-block;
+}
+
 .text-success {
   color: green;
 }
@@ -70,20 +73,23 @@ table, th, td {
 }
 
 nav {
-  text-align: center;
+  text-align: right;
 }
 
 .white-content {
   background: #e4e4e4;
   color: black;
 }
+a {
+  color: #FFF;
+}
 
-/* .white-content table, th, td {
-  border: 1px solid black;
-} */
+a:hover {
+  color: #00f;
+}
 
 .link {
-  color: #FFF;
+  color: white;
 }
 .link:hover {
    color: #00F
@@ -97,6 +103,44 @@ nav {
   color: #00F
 }
 
-.name {
-  display: inline;
+.chart__container {
+  display: block;
+}
+
+.all-time {
+  text-align: center;
+}
+
+.coin-container {
+  text-align: center;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.current-price p {
+  display: inline-block;
+  margin: 10px;
+}
+
+.color-background {
+  background-color: rgb(59, 52, 52);
+}
+
+.dropdown-item {
+  display: block;
+}
+
+.dropdown-menu {
+  display: none;
+}
+
+.dropdown-menu.show {
+  display: block;
+  background-color: blue;
+  text-align: center;
+}
+
+.MuiTable-root {
+  background-color: #1a1a1c;
+  color: white;
 }

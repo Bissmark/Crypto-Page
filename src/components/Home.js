@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import Coin from './Coin';
-import Charts from "./TestChart/Charts";
+import Charts from "./HomePageChart/Charts";
+import BasicTable from "./MuiTable";
 
 const Home = () => {
     const [coins, setCoins] = useState([]);
     const [search, setSearch] = useState('');
-  
-    const headers = ['rank', 'name', 'price', '24hr', 'volume', 'marketcap', 'Last 7 Days'];
+    const headers = ['', 'rank', 'name', 'price', '24hr', 'volume', 'marketcap', 'Last 7 Days'];
 
     useEffect(() => {
       axios
@@ -24,7 +24,6 @@ const Home = () => {
   
     const filteredCoins = coins.filter(coin =>
       coin.name.toLowerCase().includes(search.toLowerCase())
-      
     );
 
     return (
@@ -42,22 +41,24 @@ const Home = () => {
                         />
                     </form>
                 </div>
-                <table>
+                <div>
+                    <BasicTable />
+                </div>
+                {/* <table>
                     <thead>
                     <tr className="headers">
                         { headers.map((header, i) => (
-                            <td key={ i }  onClick={() => console.log(header)} >{ header }</td>
+                            <td key={ i } coins={coins}  onClick={() => console.log(header)} >{ header }</td>
                         ))}
-                    </tr>  
+                    </tr> 
                     </thead>
                     <tbody>
                         {filteredCoins.map((coin, index) => (
-                        <Coin key={coin.id} coin={coin} index={index + 1} />
+                            <Coin key={coin.id} coin={coin} index={index + 1} />
                         ))}
-                        <Charts coinData={coins} />  
-                    </tbody>
-                    
-                </table>
+                        {/* <Charts coinData={coins} />  */}
+                    {/* </tbody> */}
+                {/* </table> */}
             </div>
         </div>
     )
