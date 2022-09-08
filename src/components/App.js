@@ -13,6 +13,7 @@ import Dashboard from "./Authentication/Dashboard";
 import CoinPage from "./CoinPage";
 import GetUserName from "./Authentication/GetUserName";
 import Portfolio from "./Portfolio";
+import TotalCoinInfo from "./TotalCoinInfo";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -22,6 +23,7 @@ const App = () => {
     <div>
       <GetUserName {...{setName}} />
         <nav>
+            <TotalCoinInfo />
             <Link to="/">Home</Link>
             <ThemeContext.Consumer>
             {({ changeTheme }) => (

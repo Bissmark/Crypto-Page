@@ -10,8 +10,6 @@ import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import StarIcon from '@mui/icons-material/Star';
-import IconButton from '@mui/material/IconButton';
-import { createTheme } from '@mui/material/styles';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { visuallyHidden } from '@mui/utils';
 import axios from 'axios';
@@ -104,22 +102,9 @@ function EnhancedTableHead(props) {
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
             icon={<StarBorderIcon />} 
             checkedIcon={<StarIcon />}>
           </Checkbox>
-          {/* <Checkbox 
-            sx={{color: 'white'}}
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          /> */}
         </TableCell>
         {headers.map((header) => (
           <TableCell 
@@ -156,7 +141,6 @@ function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [coins, setCoins] = useState([]);
   const [search, setSearch] = useState('');
-  const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
     axios
@@ -260,7 +244,6 @@ function EnhancedTable() {
                 .filter((coin => coin.name.toLowerCase().includes(search.toLowerCase())))
                 .map((coin, index) => {
                   const isItemSelected = isSelected(coin.id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
                   const min = coin.sparkline_in_7d.price[0];
                   const max = coin.sparkline_in_7d.price[coin.sparkline_in_7d.price.length - 1];
                   const priceIncrease = max > min ? true : false;

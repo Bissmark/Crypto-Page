@@ -28,7 +28,7 @@ const CoinPage = () => {
           )
           .then(res => setCoin(res.data))
           .catch(error => console.log(error))
-      }, []);
+    }, []);
 
     if (isLoading) {
         return <div className="App">Loading...</div>;
