@@ -1,0 +1,91 @@
+import React, { useState } from 'react';
+import { styled, alpha } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import TotalCoinInfo from '../TotalCoinInfo';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { Link as RouterLink } from "react-router-dom";
+import { ThemeContext, themes } from '../../contexts/ThemeContext';
+import { logout } from "../../firebase";
+import GetUserName from "./GetUserName";
+
+const SearchAppBar = () => {
+    const [darkMode, setDarkMode] = useState(true);
+    const [name, setName] = useState("");
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleCloseLogOut = () => {
+        logout();
+        setAnchorEl(null);
+    }
+
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+        <GetUserName {...{setName}} />
+      <AppBar position="static" sx={{backgroundColor: '#1a1a1c'}}>
+        <Toolbar>
+          <TotalCoinInfo />
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          >
+          </Typography>
+          <ul>
+            <Button to="/" component={RouterLink}>Home</Button>
+            <ThemeContext.Consumer>
+            {({ changeTheme }) => (
+            <Button
+              onClick={() => {
+                setDarkMode(!darkMode);
+                changeTheme(darkMode ? themes.light : themes.dark);
+              }}
+            >
+              Dark/Light
+            </Button>
+            )}
+            </ThemeContext.Consumer>
+            { name && 
+            <Button
+              id="basic-button"
+              aria-controls={open ? 'basic-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+            >
+              {name}
+            </Button>}
+            
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem to="/dashboard" component={RouterLink} onClick={handleClose}>Profile</MenuItem>
+              <MenuItem to="/portfolio" component={RouterLink} onClick={handleClose}>Portfolio</MenuItem>
+              <MenuItem to="/" component={RouterLink} onClick={handleCloseLogOut}>Logout</MenuItem>
+            </Menu>
+            { !name && <Button to="/login" component={RouterLink} onClick={handleClose}>Login</Button> }
+            { !name && <Button to="/register" component={RouterLink} onClick={handleClose}>Signup</Button> }
+          </ul>
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+}
+
+export default SearchAppBar;

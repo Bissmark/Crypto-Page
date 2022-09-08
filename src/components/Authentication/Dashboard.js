@@ -34,11 +34,11 @@ function Dashboard() {
   return (
     <div className="dashboard" style={{flexWrap: 'wrap', margin: '5em'}}>
       <div className="dashboard_container">
-                    <div>{ name } Profile</div>
+                    <h1 className="profile-name">{ name }</h1>
                     <div>{ user?.email }</div>
-                    <button className="dashboard_btn" onClick={ logout }>
+                    {/* <button className="dashboard_btn" onClick={ logout }>
                         Logout
-                    </button>
+                    </button> */}
         </div>
         {loadingFirebase && <span>Data: Loading</span>}
         {values && (

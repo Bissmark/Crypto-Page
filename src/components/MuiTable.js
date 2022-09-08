@@ -214,7 +214,7 @@ function EnhancedTable() {
   return (
     <div>
       <div className="coin-search">
-        <h1 className="coin-text">Search a currency</h1>
+        <h1 className="coin-text"></h1>
         <form>
             <input
             className="coin-input"

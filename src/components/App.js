@@ -16,6 +16,7 @@ import TotalCoinInfo from "./TotalCoinInfo";
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import SearchAppBar from "./Authentication/Navbar";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -39,7 +40,8 @@ const App = () => {
   return (
     <div>
       <GetUserName {...{setName}} />
-        <nav>
+      <SearchAppBar />
+        {/* <nav>
           <ul className="left-area">
             <TotalCoinInfo />
           </ul>
@@ -114,7 +116,7 @@ const App = () => {
             { !name && <Link to="/login" >Login |</Link> }
             { !name && <Link to="/register" >Signup |</Link> }
             </div> */}
-        </nav>
+        {/* </div></nav> */}
         
         <Routes>
           <Route path="/" element={ <Home /> } />
