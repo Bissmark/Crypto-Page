@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import moment from 'moment';
-import { Tooltip, YAxis, XAxis, AreaChart, Area, CartesianGrid } from "recharts";
+import { Tooltip, YAxis, AreaChart, Area, CartesianGrid } from "recharts";
 
 const CoinPage = () => {
     const [coins, setCoins] = useState([]);
@@ -69,7 +69,6 @@ const CoinPage = () => {
                         <Area type="monotone" dataKey="price" stroke={priceIncrease ? "#82ca9d" : "red"} fill={priceIncrease ? "#82ca9d" : "red"} dot={false} />
                         <Tooltip content={ Toolip } cursor={ false } wrapperStyle={{ outline: 'none' }} />
                         <YAxis width={80} type="number" tickFormatter={(value) => value.toFixed(2)} domain={['dataMin', 'auto']} />
-                        {/* <XAxis domain={[0, 'auto']} /> */}
                         <CartesianGrid stroke="#000" strokeDasharray="5 5" />
                     </AreaChart>
             </div>

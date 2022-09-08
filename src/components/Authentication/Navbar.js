@@ -74,8 +74,8 @@ const SearchAppBar = () => {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem to="/dashboard" component={RouterLink} onClick={handleClose}>Profile</MenuItem>
-              <MenuItem to="/" component={RouterLink} onClick={handleCloseLogOut}>Logout</MenuItem>
+              <MenuItem className='dropdown' to="/dashboard" component={RouterLink} onClick={handleClose}>Profile</MenuItem>
+              <MenuItem className='dropdown' to="/" component={RouterLink} onClick={handleCloseLogOut}>Logout</MenuItem>
             </Menu>
             { !name && <Button to="/login" component={RouterLink} onClick={handleClose}>Login</Button> }
             { !name && <Button to="/register" component={RouterLink} onClick={handleClose}>Signup</Button> }

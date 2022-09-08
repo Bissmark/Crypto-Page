@@ -7,7 +7,6 @@ import Register from "./Authentication/Register";
 import Reset from "./Authentication/Reset";
 import Dashboard from "./Authentication/Dashboard";
 import CoinPage from "./CoinPage";
-import Portfolio from "./Portfolio";
 import SearchAppBar from "./Authentication/Navbar";
 
 const App = () => {
@@ -20,7 +19,6 @@ const App = () => {
           <Route path="/register" element={ <Register /> } />
           <Route path="/reset" element={ <Reset /> } />
           <Route path="/dashboard" element={ <Dashboard /> } />
-		      <Route path="/portfolio" element={ <Portfolio /> } />
           <Route path="/:coinName" element={ <CoinPage /> } />
         </Routes>
     </div>

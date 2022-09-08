@@ -16,7 +16,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { LineChart, Line, Tooltip, YAxis } from 'recharts';
-import {addFirestoreCollectionEntry, getFirestoreCollectionEntry, updateFirestoreCollectionEntry} from "./firestore"
+import {addFirestoreCollectionEntry, getFirestoreCollectionEntry } from "./firestore"
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -97,9 +97,7 @@ function EnhancedTableHead(props) {
             }}
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
-            //onChange={onSelectAllClick}
             icon={<StarBorderIcon />} 
-            //checkedIcon={<StarIcon />}
             >
           </Checkbox>
         </TableCell>

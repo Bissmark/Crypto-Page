@@ -4,7 +4,7 @@ import { getFirestore, query, getDocs, collection, where, addDoc} from 'firebase
 
 const firebaseConfig = {
     apiKey: "AIzaSyCss4CttkNBgoA3X1JMYn_3gK6Y-WZSyWg",
-    authDomain: "ceegecrypto.firebaseapp.com",
+    authDomain: "ceege-crypto-project.netlify.app",
     projectId: "ceegecrypto",
     storageBucket: "ceegecrypto.appspot.com",
     messagingSenderId: "230442394037",

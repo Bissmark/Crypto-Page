@@ -1,6 +1,6 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { query, collection, getDocs, where } from "firebase/firestore";
-import { auth, db, logout } from "../../firebase";
+import { auth, db } from "../../firebase";
 import { useEffect } from "react";
 
 const GetUserName = ({ name, setName }) => {

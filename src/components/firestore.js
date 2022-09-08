@@ -1,5 +1,5 @@
-import { getFirestore, collection } from 'firebase/firestore';
-import { useCollection, useCollectionData } from 'react-firebase-hooks/firestore';
+import { collection } from 'firebase/firestore';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { doc, setDoc, deleteDoc, updateDoc, arrayUnion, arrayRemove} from "firebase/firestore";
 import { db } from "../firebase"
 

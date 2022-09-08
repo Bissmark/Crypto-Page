@@ -226,10 +226,18 @@ a:hover {
   background-color: #1a1a1c !important;
 }
 
+.MuiList-root {
+  background-color: #e2e2e2;
+}
+
 .white-content .MuiPaper-root {
   background-color: #e4e4e4 !important;
 }
 
 .white-content .left-area p {
   color: black;
+}
+
+.MuiTablePagination-root {
+  background-color: #e2e2e2;
 }
