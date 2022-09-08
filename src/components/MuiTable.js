@@ -16,6 +16,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { LineChart, Line, Tooltip, YAxis } from 'recharts';
+import {addFirestoreCollectionEntry} from "./firestore"
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -203,6 +204,13 @@ function EnhancedTable() {
   {props.payload.map(v => <p>{v.value}</p>)}
   </div> )
 
+  const pushToFirebaseDB = (coin) => {
+    console.log(coin)
+    const {id, current_price, total_volume, market_cap, sparkline_in_7d, price_change_percentage_24h} = coin 
+    addFirestoreCollectionEntry('favourites', id, current_price, total_volume, market_cap, sparkline_in_7d, price_change_percentage_24h )
+    console.log('added')
+  }
+
   return (
     <div>
       <div className="coin-search">
@@ -262,7 +270,7 @@ function EnhancedTable() {
                             color: '#f1bb09 !important',
                           },
                         }}
-                        onClick={() => console.log(coin)}
+                        onClick={() => pushToFirebaseDB(coin)}
                         icon={<StarBorderIcon />} 
                         checkedIcon={<StarIcon />}>
                       </Checkbox>
