@@ -51,7 +51,7 @@ function Dashboard() {
                 if(value.name){
                     return (
                         <div className="favourites" style={{ width: '20%'}}>
-                          {value?.name && <div><b>Name:</b> <span className="blue">{value?.name}</span></div>}
+                          {value?.name && <div><b>Name:</b> <span className="blue">{value?.name.charAt(0).toUpperCase() + value?.name.slice(1)}</span></div>}
                           {value?.marketCap && <div><b>MarketCap:</b> <span className="blue">{value?.marketCap}</span></div>}
                           {value?.price && <div><b>Price:</b> <span className="blue">{value?.price}</span></div>}
                           {value?.twentyFourHour && (

@@ -165,12 +165,12 @@ a:hover {
   color: #1a1a1c;
 }
 
-.white-content .MuiButtonBase-root {
-  color: #1a1a1c;
-}
-
 .white-content .color-background {
   background-color: #e4e4e4;
+}
+
+.white-content .home-button {
+  color: #1976d2;
 }
 
 .CoinPageTable {
@@ -220,4 +220,16 @@ a:hover {
 
 .hidden {
   visibility: hidden;
+}
+
+.MuiPaper-root {
+  background-color: #1a1a1c !important;
+}
+
+.white-content .MuiPaper-root {
+  background-color: #e4e4e4 !important;
+}
+
+.white-content .left-area p {
+  color: black;
 }

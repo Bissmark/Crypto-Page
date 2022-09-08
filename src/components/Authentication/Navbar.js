@@ -33,7 +33,7 @@ const SearchAppBar = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
         <GetUserName {...{setName}} />
-      <AppBar position="static" sx={{backgroundColor: '#1a1a1c'}}>
+      <AppBar position="static">
         <Toolbar>
           <TotalCoinInfo />
           <Typography
@@ -44,7 +44,7 @@ const SearchAppBar = () => {
           >
           </Typography>
           <ul>
-            <Button to="/" component={RouterLink}>Home</Button>
+            <Button className="home-button" to="/" component={RouterLink}>Home</Button>
             <ThemeContext.Consumer>
             {({ changeTheme }) => (
             <Button
@@ -75,7 +75,6 @@ const SearchAppBar = () => {
               onClose={handleClose}
             >
               <MenuItem to="/dashboard" component={RouterLink} onClick={handleClose}>Profile</MenuItem>
-              <MenuItem to="/portfolio" component={RouterLink} onClick={handleClose}>Portfolio</MenuItem>
               <MenuItem to="/" component={RouterLink} onClick={handleCloseLogOut}>Logout</MenuItem>
             </Menu>
             { !name && <Button to="/login" component={RouterLink} onClick={handleClose}>Login</Button> }
