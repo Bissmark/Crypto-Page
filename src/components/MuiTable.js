@@ -16,7 +16,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { LineChart, Line, Tooltip, YAxis } from 'recharts';
-import {addFirestoreCollectionEntry, getFirestoreCollectionEntry} from "./firestore"
+import {addFirestoreCollectionEntry, getFirestoreCollectionEntry, updateFirestoreCollectionEntry} from "./firestore"
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -223,9 +223,8 @@ function EnhancedTable() {
   }
 
   const priceFormatter = (price) => {
-    if(price > 0.001) return price.toLocaleString()
+    if(price > 0.001) return price.toFixed(2)
     if(price < 0.001) return price.toFixed(6)
-    return price
   }
 
   return (
