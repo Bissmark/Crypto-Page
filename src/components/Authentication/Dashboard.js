@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
-import { auth, db, logout } from "../../firebase";
+import { auth, db } from "../../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import { getFirestoreCollectionEntry, deleteFirestoreCollectionEntry } from "../firestore";
+import Button from '@mui/material/Button';
 
 function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
@@ -38,27 +39,26 @@ function Dashboard() {
   return (
     <div className="dashboard" style={{flexWrap: 'wrap', margin: '5em'}}>
       <div className="dashboard_container">
-                    <h1 className="profile-name">{ name }</h1>
-                    <div>{ user?.email }</div>
-                    {/* <button className="dashboard_btn" onClick={ logout }>
-                        Logout
-                    </button> */}
+          <h1 className="profile-name">{ name }</h1>
+          <div>Email: <span className="blue">{ user?.email }</span></div>
         </div>
+        <h1>Portfolio</h1>
         {loadingFirebase && <span>Data: Loading</span>}
         {values && (
+          
           <div style={{display:'flex', width: '100%', flexWrap: 'wrap'}}>
             {values.map((value) => {
                 if(value.name){
                     return (
-                        <div style={{display:'flex', width: '100%'}}>
-                          {value?.name && <div><b>Name:</b> {value?.name}</div>}
-                          {value?.marketCap && <div><b>MarketCap:</b> {value?.marketCap}</div>}
-                          {value?.price && <div><b>Price:</b> {value?.price}</div>}
+                        <div className="favourites" style={{ width: '20%'}}>
+                          {value?.name && <div><b>Name:</b> <span className="blue">{value?.name}</span></div>}
+                          {value?.marketCap && <div><b>MarketCap:</b> <span className="blue">{value?.marketCap}</span></div>}
+                          {value?.price && <div><b>Price:</b> <span className="blue">{value?.price}</span></div>}
                           {value?.twentyFourHour && (
-                            <div><b>24Hr:</b> {value?.twentyFourHour}</div>
+                            <div><b>24Hr:</b> <span className="blue">{value?.twentyFourHour}</span></div>
                           )}
-                          {value?.volume && <div><b>Volume:</b> {value?.volume}</div>}
-                          <button onClick={() => removeDbEntry(value?.name)}>x</button>
+                          {value?.volume && <div><b>Volume:</b> <span className="blue">{value?.volume}</span></div>}
+                          <Button variant="contained" color="error" onClick={() => removeDbEntry(value?.name)}>Delete</Button>
                         </div>
                       );
                 }

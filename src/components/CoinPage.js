@@ -32,7 +32,7 @@ const CoinPage = () => {
 
     const Toolip = props =>  
         (! props.active) ? null :  ( 
-        <div style={{ fontFamily: 'Roboto',  color : 'white',  fontSize: '12px', fontFamily: 'Montserrat', fontWeight: 'bold' }} >
+        <div style={{ fontFamily: 'Roboto',  color : 'white',  fontSize: '20px', fontFamily: 'Montserrat', fontWeight: 'bold' }} >
         {props.payload.map(v => <p>{v.value}</p>)}
         </div> 
     )

@@ -18,10 +18,6 @@ import { Link } from 'react-router-dom';
 import { LineChart, Line, Tooltip, YAxis } from 'recharts';
 import {addFirestoreCollectionEntry, getFirestoreCollectionEntry} from "./firestore"
 
-
-
-
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -144,7 +140,7 @@ function EnhancedTable() {
   const [search, setSearch] = useState('');
 
   const [values, loadingFirebase, errorFB, snaphot] =
-getFirestoreCollectionEntry("favourites");
+    getFirestoreCollectionEntry("favourites");
 
   useEffect(() => {
     axios
@@ -207,7 +203,7 @@ getFirestoreCollectionEntry("favourites");
 
   const Toolip = props =>  
   (! props.active) ? null :  ( 
-  <div style={{ fontFamily: 'Roboto',  color : 'white',  fontSize: '12px', fontFamily: 'Montserrat', fontWeight: 'bold' }} >
+  <div style={{ fontFamily: 'Montserrat',  color : 'white',  fontSize: '15px', fontFamily: 'Montserrat', fontWeight: 'bold' }} >
   {props.payload.map(v => <p>{v.value}</p>)}
   </div> )
 
@@ -218,8 +214,18 @@ getFirestoreCollectionEntry("favourites");
   }
 
   const valuesAddedToDB = (coin) => {
+    if (!values) {
+      return false;
+    }
     let checkStatus = values?.some(value => coin.id === value.name)
+
     return checkStatus
+  }
+
+  const priceFormatter = (price) => {
+    if(price > 0.001) return price.toLocaleString()
+    if(price < 0.001) return price.toFixed(6)
+    return price
   }
 
   return (
@@ -278,7 +284,7 @@ getFirestoreCollectionEntry("favourites");
                           color: '#f1bb09 !important',
                           '&.Mui-checked': 
                           {
-                            color: '#f1bb09 !important',
+                            color: '#1976d2 !important',
                           },
                         }}
                         onClick={(e) => pushToFirebaseDB(e, coin)}
@@ -291,7 +297,7 @@ getFirestoreCollectionEntry("favourites");
                       </TableCell>
                       <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>{coin.market_cap_rank}</TableCell>
                       <TableCell align="left" sx={{ color: 'white', fontFamily: 'Montserrat' }}><Link to={coin.id}>{coin.name}<img className='image-table' src={coin.image} /></Link></TableCell>
-                      <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.current_price.toLocaleString() }</TableCell>
+                      <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ priceFormatter(coin.current_price) }</TableCell>
                       <TableCell 
                         align="center"
                         sx={ coin.price_change_percentage_24h > 0 ? {color: 'green !important'} : {color: 'red !important'}}>
