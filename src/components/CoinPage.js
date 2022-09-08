@@ -46,11 +46,16 @@ const CoinPage = () => {
         return {"price": name}
     })
 
+    // const coinPricingData = coin.sparkline_in_7d.price.map(value => {
+    //     return {"price": value.toFixed(5)}
+    // })
+
     console.log(coinPricingData);
 
     return (
         <div className="coin-container">
             <div className="color-background">
+                <div className="inline-table-text">
                 <p>Rank: {coins.coingecko_rank}</p>
                 <div className="image-name">
                     <p>Name: {coins.name}</p>
@@ -74,14 +79,18 @@ const CoinPage = () => {
                 <p>All-Time High Data: {moment(coins.market_data.ath_date.usd).format('Do MMM YY') }</p>
                 <p>All-Time Low: ${coins.market_data.atl.usd.toLocaleString()}</p>
                 <p>All-Time Low Data: {moment(coins.market_data.atl_date.usd).format('Do MMM YY')}</p>
+                </div>
+                <div className="inline-table-text">
+                    <td>
+                        <LineChart width={500} height={300} data={coinPricingData}>
+                            <Line type="monotone" dataKey="price" stroke="#82ca9d" />
+                            <Tooltip content={ Toolip } cursor={ false } />
+                            <YAxis hide={true} domain={['dataMin', 'dataMax']} />
+                        </LineChart> 
+                    </td>
+                </div>
             </div>
-            <td>
-                <LineChart width={350} height={100} data={coinPricingData}>
-                    <Line type="monotone" dataKey="price" stroke="#82ca9d" />
-                    <Tooltip content={ Toolip } cursor={ false } />
-                    <YAxis hide={true} domain={['dataMin', 'dataMax']} />
-                </LineChart> 
-            </td>
+            
         </div>
     )
 }

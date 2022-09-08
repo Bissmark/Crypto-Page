@@ -10,7 +10,8 @@ import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import StarIcon from '@mui/icons-material/Star';
-import { ThemeProvider } from 'react-bootstrap';
+import IconButton from '@mui/material/IconButton';
+import { createTheme } from '@mui/material/styles';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { visuallyHidden } from '@mui/utils';
 import axios from 'axios';
@@ -92,7 +93,24 @@ function EnhancedTableHead(props) {
           {/* <StarBorderIcon
           sx={{color: 'white'}} 
            /> */}
-          <Checkbox 
+           <Checkbox 
+            sx={{
+              color: '#f1bb09',
+              '&.Mui-checked': 
+              {
+                color: '#f1bb09',
+              },
+            }}
+            indeterminate={numSelected > 0 && numSelected < rowCount}
+            checked={rowCount > 0 && numSelected === rowCount}
+            onChange={onSelectAllClick}
+            inputProps={{
+              'aria-label': 'select all desserts',
+            }}
+            icon={<StarBorderIcon />} 
+            checkedIcon={<StarIcon />}>
+          </Checkbox>
+          {/* <Checkbox 
             sx={{color: 'white'}}
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -101,7 +119,7 @@ function EnhancedTableHead(props) {
             inputProps={{
               'aria-label': 'select all desserts',
             }}
-          />
+          /> */}
         </TableCell>
         {headers.map((header) => (
           <TableCell 
@@ -138,6 +156,7 @@ function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [coins, setCoins] = useState([]);
   const [search, setSearch] = useState('');
+  const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
     axios
@@ -204,15 +223,6 @@ function EnhancedTable() {
   {props.payload.map(v => <p>{v.value}</p>)}
   </div> )
 
-  const theme = ThemeProvider({
-    props:{
-      MuiCheckbox:{
-        icon: <StarBorderIcon />,
-        checkedIcon:<StarIcon />
-      }
-    }
-  });
-
   return (
     <div>
       <div className="coin-search">
@@ -268,22 +278,19 @@ function EnhancedTable() {
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
-                        {/* <StarBorderIcon 
-                          sx={{ color: 'white', fontFamily: 'Montserrat' }}
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            'aria-labelledby': labelId,
-                          }}
-                        /> */}
-                          <Checkbox 
-                            sx={{ color: 'white', fontFamily: 'Montserrat' }}
-                            color="primary"
-                            checked={isItemSelected}
-                            inputProps={{
-                              'aria-labelledby': labelId,
-                            }}
-                          />
+                      <Checkbox 
+                        sx={{
+                          color: '#f1bb09',
+                          '&.Mui-checked': 
+                          {
+                            color: '#f1bb09',
+                          },
+                        }}
+                        aria-label="upload picture" 
+                        component="label" 
+                        icon={<StarBorderIcon />} 
+                        checkedIcon={<StarIcon />}>
+                      </Checkbox>
                       </TableCell>
                       <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>{coin.market_cap_rank}</TableCell>
                       <TableCell align="left" sx={{ color: 'white', fontFamily: 'Montserrat' }}><img className='image-table' src={coin.image} /><Link to={coin.id}>{coin.name}</Link></TableCell>

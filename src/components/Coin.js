@@ -34,13 +34,13 @@ const Coin = ({ coin }) => {
         <td>
             ${ coin.market_cap.toLocaleString() }
         </td>
-        <td>
+        {/* <td>
             <LineChart width={150} height={100} data={coin.sparkline_in_7d.price}>
                 <Line type="monotone" dataKey="value" stroke="#8884d8" />
                 <CartesianGrid stroke="#ccc" />
                 <Tooltip />
             </LineChart>
-        </td>
+        </td> */}
       </tr>
     );
   };
