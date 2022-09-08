@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import { auth, db, logout } from "../../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
-import { getFirestoreCollectionEntry } from "../firestore";
+import { getFirestoreCollectionEntry, deleteFirestoreCollectionEntry } from "../firestore";
 
 function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
@@ -24,6 +24,10 @@ function Dashboard() {
       alert("An error occured while fetching user data");
     }
   };
+
+  const removeDbEntry = (name) => {
+    deleteFirestoreCollectionEntry('favourites', name)
+  }
 
   useEffect(() => {
     if (loading) return;
@@ -54,6 +58,7 @@ function Dashboard() {
                             <div><b>24Hr:</b> {value?.twentyFourHour}</div>
                           )}
                           {value?.volume && <div><b>Volume:</b> {value?.volume}</div>}
+                          <button onClick={() => removeDbEntry(value?.name)}>x</button>
                         </div>
                       );
                 }

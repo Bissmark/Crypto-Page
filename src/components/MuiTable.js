@@ -16,7 +16,11 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { LineChart, Line, Tooltip, YAxis } from 'recharts';
-import {addFirestoreCollectionEntry} from "./firestore"
+import {addFirestoreCollectionEntry, getFirestoreCollectionEntry} from "./firestore"
+
+
+
+
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -139,6 +143,9 @@ function EnhancedTable() {
   const [coins, setCoins] = useState([]);
   const [search, setSearch] = useState('');
 
+  const [values, loadingFirebase, errorFB, snaphot] =
+getFirestoreCollectionEntry("favourites");
+
   useEffect(() => {
     axios
       .get(
@@ -204,11 +211,15 @@ function EnhancedTable() {
   {props.payload.map(v => <p>{v.value}</p>)}
   </div> )
 
-  const pushToFirebaseDB = (coin) => {
-    console.log(coin)
-    const {id, current_price, total_volume, market_cap, sparkline_in_7d, price_change_percentage_24h} = coin 
-    addFirestoreCollectionEntry('favourites', id, current_price, total_volume, market_cap, sparkline_in_7d, price_change_percentage_24h )
+  const pushToFirebaseDB = (e,coin) => {
+    const {id, current_price, market_cap_rank, total_volume, market_cap, sparkline_in_7d, price_change_percentage_24h} = coin 
+    addFirestoreCollectionEntry('favourites', market_cap_rank, id, current_price, total_volume, market_cap, sparkline_in_7d, price_change_percentage_24h )
     console.log('added')
+  }
+
+  const valuesAddedToDB = (coin) => {
+    let checkStatus = values?.some(value => coin.id === value.name)
+    return checkStatus
   }
 
   return (
@@ -270,9 +281,12 @@ function EnhancedTable() {
                             color: '#f1bb09 !important',
                           },
                         }}
-                        onClick={() => pushToFirebaseDB(coin)}
+                        onClick={(e) => pushToFirebaseDB(e, coin)}
                         icon={<StarBorderIcon />} 
-                        checkedIcon={<StarIcon />}>
+                        checkedIcon={<StarIcon />}
+                        checked={valuesAddedToDB(coin)}
+                        >
+                        
                       </Checkbox>
                       </TableCell>
                       <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>{coin.market_cap_rank}</TableCell>
