@@ -238,7 +238,7 @@ function EnhancedTable() {
                 .filter((coin => coin.name.toLowerCase().includes(search.toLowerCase())))
                 .map((coin) => {
                   const isItemSelected = isSelected(coin.id);
-                  console.log(isItemSelected)
+                  
                   const min = coin.sparkline_in_7d.price[0];
                   const max = coin.sparkline_in_7d.price[coin.sparkline_in_7d.price.length - 1];
                   const priceIncrease = max > min ? true : false;
@@ -262,12 +262,13 @@ function EnhancedTable() {
                             color: '#f1bb09 !important',
                           },
                         }}
+                        onClick={() => console.log(coin)}
                         icon={<StarBorderIcon />} 
                         checkedIcon={<StarIcon />}>
                       </Checkbox>
                       </TableCell>
                       <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>{coin.market_cap_rank}</TableCell>
-                      <TableCell align="left" sx={{ color: 'white', fontFamily: 'Montserrat' }}><img className='image-table' src={coin.image} /><Link to={coin.id}>{coin.name}</Link></TableCell>
+                      <TableCell align="left" sx={{ color: 'white', fontFamily: 'Montserrat' }}><Link to={coin.id}>{coin.name}<img className='image-table' src={coin.image} /></Link></TableCell>
                       <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.current_price.toLocaleString() }</TableCell>
                       <TableCell 
                         align="center"
