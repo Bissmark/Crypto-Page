@@ -36,7 +36,7 @@ export const removeFirestoreCollectionArrayEntry = async (collectionName, title,
     });           
 }
 
-export const addFirestoreCollectionEntry = async (collectionName, name, price, volume, marketCap, sevenDays, twentyFourHour) => {
+export const addFirestoreCollectionEntry = async (collectionName, rank, name, price, volume, marketCap, sevenDays, twentyFourHour) => {
     // Add a new document in collection "cities"
     await setDoc(doc(db, collectionName, name), {
         name,
@@ -48,6 +48,7 @@ export const addFirestoreCollectionEntry = async (collectionName, name, price, v
     });           
 }
 
-export const deleteFirestoreCollectionEntry = async (collectionName, title) => {
-    await deleteDoc(doc(db, collectionName, title));
+export const deleteFirestoreCollectionEntry = async (collectionName, name) => {
+    console.log(name)
+    await deleteDoc(doc(db, collectionName, name));
 }
