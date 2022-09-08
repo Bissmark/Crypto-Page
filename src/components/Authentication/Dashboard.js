@@ -16,7 +16,8 @@ function Dashboard() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
   const [values, loadingFirebase, errorFB, snaphot] =
-    getFirestoreCollectionEntry("favourites");
+  getFirestoreCollectionEntry("favourites");
+  
   const fetchUserName = async () => {
     try {
       const q = query(collection(db, "users"), where("uid", "==", user?.uid));
@@ -92,32 +93,34 @@ function Dashboard() {
         <h1>Portfolio</h1>
         {loadingFirebase && <span>Data: Loading</span>}
         {values && (
-          
-          <div style={{display:'flex', width: '100%', flexWrap: 'wrap'}}>
+          <div>
             {values.map((value) => {
                 if(value.name){
                     return (
                         <div className="favourites" style={{ width: '20%'}}>
                           {value?.name && <div><b>Name:</b> <span className="blue">{value?.name.charAt(0).toUpperCase() + value?.name.slice(1)}</span></div>}
-                          {value?.marketCap && <div><b>MarketCap:</b> <span className="blue">{value?.marketCap}</span></div>}
-                          {value?.price && <div><b>Price:</b> <span className="blue">{value?.price}</span></div>}
-                          {value?.twentyFourHour && (
-                            <div><b>24Hr:</b> <span className="blue">{value?.twentyFourHour}</span></div>
-                          )}
-                          {value?.volume && <div><b>Volume:</b> <span className="blue">{value?.volume}</span></div>}
-                          <Button variant="contained" color="error" onClick={() => removeDbEntry(value?.name)}>Delete</Button>
-                          {value?.volume && <div><b>Initial Investment:</b> {value?.investment}</div>}
-                          {value?.volume && <div><b>Current Investment:</b> {currentInvestmentValue(value?.investment,value?.name )}</div>}
-                          <button onClick={() => removeDbEntry(value?.name)}>x</button>
+                          {value?.marketCap && <div><b>MarketCap:</b> <span className="blue">{value?.marketCap.toLocaleString()}</span></div>}
+                          {value?.price && <div><b>Price:</b> <span className="blue">${value?.price}</span></div>}
+                          <div className="twenty-four-change">
+                            <p><b>24hr change:</b></p>
+                        <p
+                            className={value?.twentyFourHour > 0 ? "text-success" : "text-danger"}>
+                            { value?.twentyFourHour.toFixed(2) }%
+                        </p>
+                        </div>
+                          {value?.volume && <div><b>Volume:</b> <span className="blue">{value?.volume.toLocaleString()}</span></div>}
+                          {value?.volume && <div><b>Initial Investment:</b> <span className="blue">{value?.investment}</span></div>}
+                          {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment,value?.name )}</span></div>}
                           <InvestmentInput value={value}/>
+                          <Button variant="contained" color="error" onClick={() => removeDbEntry(value?.name)}>Delete</Button>
                         </div>
                       );
                 }
              
             })}
-              <div>Total Initial Investment: {sumInvestment(values)}</div>
-              <div>Total Current Investment: {sumCurrentInvestment(values)}</div>
-              <div>Total Gain/Loss: {sumInvestment(values) - sumCurrentInvestment(values)}</div>
+              <div>Total Initial Investment: <span className="blue">{sumInvestment(values)}</span></div>
+              <div>Total Current Investment: <span className="blue">{sumCurrentInvestment(values)}</span></div>
+              <div>Total Gain/Loss: <span className="blue">{sumInvestment(values) - sumCurrentInvestment(values)}</span></div>
           </div>
         
         )}
