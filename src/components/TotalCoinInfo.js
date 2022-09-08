@@ -11,7 +11,6 @@ const TotalCoinInfo = () => {
             'https://api.coingecko.com/api/v3/global'
           )
           .then(res => {
-            console.log(res.data.data.active_cryptocurrencies);
             setCoin(res.data);
             setLoading(false);
           })
@@ -23,14 +22,14 @@ const TotalCoinInfo = () => {
         return <div className="App">Loading...</div>;
     }
 
-    //console.log(coin.data.active_cryptocurrencies);
-
     return (
-        <div className="navbar-left">
+        <nav>
+          <ul className="left-area">
               <p>Amount of Coins: {coin.data.active_cryptocurrencies} </p>
               <p>Total Market Cap: {coin.data.total_market_cap.usd.toLocaleString()}</p>
               <p>Total 24hr Volume: {coin.data.total_volume.usd.toLocaleString()}</p>
-        </div>
+          </ul>    
+        </nav>
     )
 }
 

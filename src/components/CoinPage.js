@@ -41,17 +41,7 @@ const CoinPage = () => {
         <p>{ props.label }</p>
         </div> 
     )
-
-    const coinPricingData = coin.filter(name => {
-        return {"price": name}
-    })
-
-    // const coinPricingData = coin.sparkline_in_7d.price.map(value => {
-    //     return {"price": value.toFixed(5)}
-    // })
-
-    console.log(coinPricingData);
-
+    
     return (
         <div className="coin-container">
             <div className="color-background">
@@ -80,19 +70,21 @@ const CoinPage = () => {
                 <p>All-Time Low: ${coins.market_data.atl.usd.toLocaleString()}</p>
                 <p>All-Time Low Data: {moment(coins.market_data.atl_date.usd).format('Do MMM YY')}</p>
                 </div>
-                <div className="inline-table-text">
-                    <td>
-                        <LineChart width={500} height={300} data={coinPricingData}>
-                            <Line type="monotone" dataKey="price" stroke="#82ca9d" />
-                            <Tooltip content={ Toolip } cursor={ false } />
-                            <YAxis hide={true} domain={['dataMin', 'dataMax']} />
-                        </LineChart> 
-                    </td>
-                </div>
+                {coin.map(test => {
+                const coinPricingData = test.sparkline_in_7d.price.map(value => {
+                    console.log(test.sparkline_in_7d.price)
+                    return { "price": value.toFixed(5)}
+                })
+                return (
+                    <LineChart width={500} height={300} data={coinPricingData}>
+                        <Line type="natural" dataKey="price" stroke="#82ca9d" dot={false} />
+                        <Tooltip content={ Toolip } cursor={ false } wrapperStyle={{ outline: 'none' }} />
+                        <YAxis hide={true} domain={['dataMin', 'dataMax']} />
+                    </LineChart>
+                )})}
             </div>
-            
         </div>
     )
 }
-
+    
 export default CoinPage;

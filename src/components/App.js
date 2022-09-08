@@ -1,7 +1,8 @@
 import React, { useState  } from "react";
 import { Routes, Route } from "react-router-dom";
 import '../App.css'
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import { Link } from '@mui/material';
 import { ThemeContext, themes } from "../contexts/ThemeContext";
 import Dropdown from "react-bootstrap/Dropdown";
 
@@ -22,7 +23,7 @@ import MenuItem from '@mui/material/MenuItem';
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [name, setName] = useState("");
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [selectedList, setSelectedList] = useState([]);
 
   const open = Boolean(anchorEl);
@@ -50,8 +51,11 @@ const App = () => {
     <div>
       <GetUserName {...{setName}} />
         <nav>
+          <ul className="left-area">
             <TotalCoinInfo />
-            <Button>Home</Button>
+          </ul>
+          <ul className="right-area">
+            <Button to="/" component={RouterLink}>Home</Button>
             <ThemeContext.Consumer>
             {({ changeTheme }) => (
             <Button
@@ -64,6 +68,7 @@ const App = () => {
             </Button>
             )}
             </ThemeContext.Consumer>
+            { name && 
             <Button
               id="basic-button"
               aria-controls={open ? 'basic-menu' : undefined}
@@ -72,28 +77,24 @@ const App = () => {
               onClick={handleClick}
             >
               {name}
-            </Button>
+            </Button>}
+             
             <Menu
               id="basic-menu"
               anchorEl={anchorEl}
               open={open}
               onClose={handleClose}
-              MenuListProps={{
-                'aria-labelledby': 'basic-button',
-              }}
             >
-              <MenuItem
-              onClick={() => _handleClick(0)}
-              selected={selectedList.includes(0)}
-              component={Link}
-              href="https://en.wikipedia.org/wiki/History_of_the_electric_vehicle"
-              target="_blank"
-
-            ></MenuItem>
-              <MenuItem containerElement={<Link to="/dashboard" />} onClick={handleClose}> <Link to="/dashboard"></Link>Profile</MenuItem>
-              <MenuItem onClick={handleClose}> <Link to="/portfolio"></Link>Portfolio</MenuItem>
-              <MenuItem onClick={handleClose}><Link to="/"></Link>Logout</MenuItem>
-            </Menu>
+              <MenuItem to="/dashboard" component={RouterLink} onClick={handleClose}>Profile</MenuItem>
+              <MenuItem to="/portfolio" component={RouterLink} onClick={handleClose}>Portfolio</MenuItem>
+              <MenuItem to="/" component={RouterLink} onClick={handleClose}>Logout</MenuItem>
+            { !name && <MenuItem to="/login" component={RouterLink} onClick={handleClose}>Login</MenuItem> }
+            { !name && <MenuItem to="/register" component={RouterLink} onClick={handleClose}>Signup</MenuItem> }
+            </Menu> 
+            
+          </ul>
+            
+            
             {/* <div>
             <Link to="/">Home</Link>
             <ThemeContext.Consumer>
@@ -128,13 +129,13 @@ const App = () => {
         </nav>
         
         <Routes>
+          <Route path="/" element={ <Home /> } />
           <Route exact path="/login" element={ <Login /> } />
           <Route path="/register" element={ <Register /> } />
           <Route path="/reset" element={ <Reset /> } />
           <Route path="/dashboard" element={ <Dashboard /> } />
-          <Route path="/" element={ <Home /> } />
+		      <Route path="/portfolio" element={ <Portfolio /> } />
           <Route path="/:coinName" element={ <CoinPage /> } />
-		  <Route path="/portfolio" element={ <Portfolio /> } />
         </Routes>
     </div>
   );
