@@ -2,10 +2,8 @@ import React, { useState  } from "react";
 import { Routes, Route } from "react-router-dom";
 import '../App.css'
 import { Link as RouterLink } from "react-router-dom";
-import { Link } from '@mui/material';
 import { ThemeContext, themes } from "../contexts/ThemeContext";
-import Dropdown from "react-bootstrap/Dropdown";
-
+import { logout } from "../firebase";
 import Home from "./Home";
 import Login from "./Authentication/Login";
 import Register from "./Authentication/Register";
@@ -15,7 +13,6 @@ import CoinPage from "./CoinPage";
 import GetUserName from "./Authentication/GetUserName";
 import Portfolio from "./Portfolio";
 import TotalCoinInfo from "./TotalCoinInfo";
-
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -24,7 +21,6 @@ const App = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [name, setName] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedList, setSelectedList] = useState([]);
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -34,18 +30,11 @@ const App = () => {
     setAnchorEl(null);
   };
 
-  const _handleClick = (index) => {
-    if (selectedList.includes(index)) {
-      setSelectedList(
-        selectedList.filter(function (value) {
-          return value !== index;
-        }
-        )
-      );
-    } else {
-      setSelectedList([...selectedList, index]);
-    }
+  const handleCloseLogOut = () => {
+    logout();
+    setAnchorEl(null);
   }
+  console.log(name);
 
   return (
     <div>
@@ -78,7 +67,7 @@ const App = () => {
             >
               {name}
             </Button>}
-             
+            
             <Menu
               id="basic-menu"
               anchorEl={anchorEl}
@@ -87,11 +76,10 @@ const App = () => {
             >
               <MenuItem to="/dashboard" component={RouterLink} onClick={handleClose}>Profile</MenuItem>
               <MenuItem to="/portfolio" component={RouterLink} onClick={handleClose}>Portfolio</MenuItem>
-              <MenuItem to="/" component={RouterLink} onClick={handleClose}>Logout</MenuItem>
-            { !name && <MenuItem to="/login" component={RouterLink} onClick={handleClose}>Login</MenuItem> }
-            { !name && <MenuItem to="/register" component={RouterLink} onClick={handleClose}>Signup</MenuItem> }
-            </Menu> 
-            
+              <MenuItem to="/" component={RouterLink} onClick={handleCloseLogOut}>Logout</MenuItem>
+            </Menu>
+            { !name && <Button to="/login" component={RouterLink} onClick={handleClose}>Login</Button> }
+            { !name && <Button to="/register" component={RouterLink} onClick={handleClose}>Signup</Button> }
           </ul>
             
             

@@ -33,8 +33,6 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -88,22 +86,20 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          {/* <StarBorderIcon
-          sx={{color: 'white'}} 
-           /> */}
            <Checkbox 
             sx={{
-              color: '#f1bb09',
+              color: '#f1bb09 !important',
               '&.Mui-checked': 
               {
-                color: '#f1bb09',
+                color: '#f1bb09 !important',
               },
             }}
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
+            //onChange={onSelectAllClick}
             icon={<StarBorderIcon />} 
-            checkedIcon={<StarIcon />}>
+            //checkedIcon={<StarIcon />}
+            >
           </Checkbox>
         </TableCell>
         {headers.map((header) => (
@@ -134,11 +130,11 @@ function EnhancedTableHead(props) {
 }
 
 function EnhancedTable() {
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [order, setOrder] = useState('');
+  const [orderBy, setOrderBy] = useState('');
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [coins, setCoins] = useState([]);
   const [search, setSearch] = useState('');
 
@@ -237,13 +233,12 @@ function EnhancedTable() {
               rowCount={coins.length}
             />
             <TableBody>
-              {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.slice().sort(getComparator(order, orderBy)) */}
               {stableSort(coins, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .filter((coin => coin.name.toLowerCase().includes(search.toLowerCase())))
-                .map((coin, index) => {
+                .map((coin) => {
                   const isItemSelected = isSelected(coin.id);
+                  console.log(isItemSelected)
                   const min = coin.sparkline_in_7d.price[0];
                   const max = coin.sparkline_in_7d.price[coin.sparkline_in_7d.price.length - 1];
                   const priceIncrease = max > min ? true : false;
@@ -254,8 +249,6 @@ function EnhancedTable() {
                     <TableRow 
                       hover
                       onClick={(event) => handleClick(event, coin.id)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={coin.id}
                       selected={isItemSelected}
@@ -263,14 +256,12 @@ function EnhancedTable() {
                       <TableCell padding="checkbox">
                       <Checkbox 
                         sx={{
-                          color: '#f1bb09',
+                          color: '#f1bb09 !important',
                           '&.Mui-checked': 
                           {
-                            color: '#f1bb09',
+                            color: '#f1bb09 !important',
                           },
                         }}
-                        aria-label="upload picture" 
-                        component="label" 
                         icon={<StarBorderIcon />} 
                         checkedIcon={<StarIcon />}>
                       </Checkbox>
@@ -280,7 +271,7 @@ function EnhancedTable() {
                       <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.current_price.toLocaleString() }</TableCell>
                       <TableCell 
                         align="center"
-                        sx={ coin.price_change_percentage_24h > 0 ? {color: 'green'} : {color: 'red'}}>
+                        sx={ coin.price_change_percentage_24h > 0 ? {color: 'green !important'} : {color: 'red !important'}}>
                         { coin.price_change_percentage_24h.toFixed(2) }%
                       </TableCell>
                       <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.total_volume.toLocaleString() }</TableCell>

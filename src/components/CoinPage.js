@@ -2,18 +2,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import moment from 'moment';
-import { LineChart, Tooltip, CartesianGrid, YAxis, Line, AreaChart, Area, XAxis } from "recharts";
+import { Tooltip, YAxis, AreaChart, Area } from "recharts";
 
 const CoinPage = () => {
     const [coins, setCoins] = useState([]);
     const [isLoading, setLoading] = useState(true);
-
     const params = useParams();
 
     useEffect(() => { 
         axios.get(`https://api.coingecko.com/api/v3/coins/${ params.coinName }?sparkline=true`)
           .then(res => {
-            console.log(res.data);
             setCoins(res.data);
             setLoading(false);
           })
@@ -23,8 +21,6 @@ const CoinPage = () => {
     if (isLoading) {
         return <div className="App">Loading...</div>;
     }
-
-    console.log(coins.market_data.sparkline_7d.price);
 
     const coinPricingData = coins.market_data.sparkline_7d.price.map(value => {
         return {"price": value.toFixed(5)}
@@ -45,13 +41,12 @@ const CoinPage = () => {
         <div className="coin-container">
             <div className="color-background">
                 <div className="inline-table-text">
-                <p>Rank: {coins.coingecko_rank}</p>
-                <div className="image-name">
-                    <p>Name: {coins.name}</p>
                     <img src={ coins.image.thumb } alt={ coins.name }></img>
-                </div>
-                <div className="current-price">
+                    <p>Rank: {coins.coingecko_rank}</p>
+                    <p>Name: {coins.name}</p>
                     <p>Current Price: ${coins.market_data.current_price.usd}</p>
+                    <div className="twenty-four-change">
+                        <p>24hr change: </p>
                     <p
                         className={coins.market_data.price_change_percentage_24h > 0 ? "text-success" : "text-danger"}>
                         { coins.market_data.price_change_percentage_24h.toFixed(2) }%
@@ -64,7 +59,7 @@ const CoinPage = () => {
                     <p>All-Time High Data: {moment(coins.market_data.ath_date.usd).format('Do MMM YY') }</p>
                     <p>All-Time Low: ${coins.market_data.atl.usd.toLocaleString()}</p>
                     <p>All-Time Low Data: {moment(coins.market_data.atl_date.usd).format('Do MMM YY')}</p>
-                </div>    
+                </div>
                 <td className="inline-table-text">
                     <AreaChart width={500} height={300} data={coinPricingData}>
                         <Area type="monotone" dataKey="price" stroke={priceIncrease ? "#82ca9d" : "red"} fill={priceIncrease ? "#82ca9d" : "red"} dot={false} />
@@ -73,6 +68,7 @@ const CoinPage = () => {
                     </AreaChart>
                 </td>
             </div>
+            
         </div>
     )
 }

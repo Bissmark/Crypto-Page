@@ -95,6 +95,10 @@ a:hover {
    color: #00F
 }
 
+.blue {
+  color: rgba(59,130,246);
+}
+
 .white-content .link {
   color: #1a1a1c;
 }
@@ -177,13 +181,18 @@ a:hover {
   display: inline-block;
 }
 
-.image-name {
-  display: block ruby;
+.image-name p {
+  display: inline-block;
 }
 
 .inline-table-text {
   display: inline-block;
   margin: 0 50px 0 0;
+}
+
+.twenty-four-change p {
+  display: inline-block;
+  margin: 0 15px 0 0;
 }
 
 .image-table {

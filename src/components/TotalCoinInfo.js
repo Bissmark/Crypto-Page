@@ -25,9 +25,9 @@ const TotalCoinInfo = () => {
     return (
         <nav>
           <ul className="left-area">
-              <p>Amount of Coins: {coin.data.active_cryptocurrencies} </p>
-              <p>Total Market Cap: {coin.data.total_market_cap.usd.toLocaleString()}</p>
-              <p>Total 24hr Volume: {coin.data.total_volume.usd.toLocaleString()}</p>
+              <p>Amount of Coins: <span className="blue">{coin.data.active_cryptocurrencies}</span> </p>
+              <p>Total Market Cap: <span className="blue">{coin.data.total_market_cap.usd.toLocaleString()}</span></p>
+              <p>Total 24hr Volume: <span className="blue">{coin.data.total_volume.usd.toLocaleString()}</span></p>
           </ul>    
         </nav>
     )
