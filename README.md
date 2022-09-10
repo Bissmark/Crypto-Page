@@ -22,6 +22,7 @@ This project has been created in React Javascript using the following libraries 
 - Netlify
 
 ### How to Use
+ceegecrypto.firebaseapp.com
 
 You start at the home page where you see a table with the top 10 coins of the day. You can view the total coins, market cap and
 24hr volume of all coins or you can see individual coins and how they have been performing. The graph on the homepage shows how
