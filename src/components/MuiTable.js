@@ -291,7 +291,7 @@ function EnhancedTable() {
                       tabIndex={-1}
                       key={coin.id}
                       selected={isItemSelected}
-                      overflowX='scroll'
+                      // overflowX='scroll'
                     >
                       <TableCell padding="checkbox">
                       <Checkbox 
