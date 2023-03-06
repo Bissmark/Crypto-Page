@@ -8,7 +8,6 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
-import { useMediaQuery } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -115,7 +114,7 @@ function EnhancedTableHead(props) {
             >
           </Checkbox>
         </TableCell>
-        {headers.map((header) => (
+        {headers.map((header, i) => (
           <TableCell 
             sx={{color: 'white'}}
             key={ header.id }
@@ -218,7 +217,7 @@ function EnhancedTable() {
   const Toolip = props =>  
   (! props.active) ? null :  ( 
   <div style={{ fontFamily: 'Montserrat',  color : 'white',  fontSize: '15px', fontFamily: 'Montserrat', fontWeight: 'bold' }} >
-  {props.payload.map(v => <p>{v.value}</p>)}
+  {props.payload.map((v, i) => <p key ={ i }>{v.value}</p>)}
   </div> )
 
   const pushToFirebaseDB = (e,coin) => {
@@ -237,8 +236,8 @@ function EnhancedTable() {
   }
 
   const priceFormatter = (price) => {
-    if(price > 0.001) return price.toFixed(2)
-    if(price < 0.001) return price.toFixed(6)
+    if(price > 0.001) return price.toLocaleString(undefined, { 'minimumFractionDigits': 2,'maximumFractionDigits': 2 })
+    if(price < 0.001) return price.toLocaleString(undefined, { 'minimumFractionDigits': 6,'maximumFractionDigits': 6 })
   }
 
   return (

@@ -18,7 +18,7 @@ export const updateFirestoreCollectionEntry = async (collectionName, title, fiel
 }
 
 export const updateFirestoreCollectionArrayEntry = async (collectionName, title, field, value) => {
-    console.log(123, value, field)
+    // console.log(123, value, field)
     await updateDoc(doc(db, collectionName, title), {
         title,
         [field]:arrayUnion(value)
@@ -27,7 +27,7 @@ export const updateFirestoreCollectionArrayEntry = async (collectionName, title,
 
 export const removeFirestoreCollectionArrayEntry = async (collectionName, title, field, value) => {
     // Add a new document in collection "cities"
-    console.log(123, value, field)
+    // console.log(123, value, field)
     await updateDoc(doc(db, collectionName, title), {
         title,
         [field]:arrayRemove(value)
@@ -47,6 +47,6 @@ export const addFirestoreCollectionEntry = async (collectionName, rank, name, pr
 }
 
 export const deleteFirestoreCollectionEntry = async (collectionName, name) => {
-    console.log(name)
+    // console.log(name)
     await deleteDoc(doc(db, collectionName, name));
 }

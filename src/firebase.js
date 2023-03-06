@@ -3,7 +3,7 @@ import { GoogleAuthProvider, getAuth, signInWithPopup, signInWithEmailAndPasswor
 import { getFirestore, query, getDocs, collection, where, addDoc} from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCss4CttkNBgoA3X1JMYn_3gK6Y-WZSyWg",
+    apiKey: process.env.REACT_APP_API_KEY,
     authDomain: "ceegecrypto.firebaseapp.com",
     projectId: "ceegecrypto",
     storageBucket: "ceegecrypto.appspot.com",

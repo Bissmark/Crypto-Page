@@ -5,12 +5,7 @@ import "./Dashboard.css";
 import { auth, db } from "../../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import { getFirestoreCollectionEntry, deleteFirestoreCollectionEntry, updateFirestoreCollectionEntry } from "../firestore";
-import Button from '@mui/material/Button';
-//import {InvestmentInput} from "../investmentInput"
 import axios from 'axios';
-import { Stack } from "@mui/material";
-import Input from '@mui/material/Input';
-import { textAlign } from "@mui/system";
 import { InvestmentInput } from "../investmentInput";
 
 
@@ -96,52 +91,47 @@ function Dashboard() {
   return (
     <div className="dashboard" style={{flexWrap: 'wrap'}}>
       <div className="dashboard_container">
-          <h1 className="profile-name">{ name }</h1>
-          <div style={{ textAlign: 'center' }}>Email: <span style={{ color: 'white'}}>{ user?.email }</span></div>
-        </div>
-        <h1>Portfolio</h1>
-        {loadingFirebase && <span>Data: Loading</span>}
-        {values && (
-          <div>
-            {values.map((value) => {
-                if(value.name){
-                    return (
-                      <div style={{ backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center', marginBottom: '1em', padding: '1em', lineHeight: '2em' }}>
+        <h1 className="profile-name">{ name }</h1>
+        <div style={{ textAlign: 'center' }}>Email: <span style={{ color: 'white'}}>{ user?.email }</span></div>
+      </div>
+      <h1>Portfolio</h1>
+      {loadingFirebase && <span>Data: Loading</span>}
+      {values && (
+        <div>
+          {values.map((value) => {
+              if(value.name) {
+                  return (
+                    <div style={{ backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center', marginBottom: '1em', padding: '1em', lineHeight: '2em' }}>
+                      <div>
+                        {value?.name && <div><b>Name:</b> <span className="blue">{value?.name.charAt(0).toUpperCase() + value?.name.slice(1)}</span></div>}
+                        {value?.marketCap && <div><b>MarketCap:</b> <span className="blue">{value?.marketCap.toLocaleString()}</span></div>}
+                        {value?.price && <div><b>Price:</b> <span className="blue">${value?.price}</span></div>}
+                        <div className="twenty-four-change">
+                          <p><b>24hr change:</b></p>
+                          <p className={value?.twentyFourHour > 0 ? "text-success" : "text-danger"}>
+                          { value?.twentyFourHour.toFixed(2) }%
+                          </p>
+                        </div>
+                        {value?.volume && <div><b>Volume:</b> <span className="blue">{value?.volume.toLocaleString()}</span></div>}
+                        {value?.volume && <div><b>Initial Investment:</b> <span className="blue">{value?.investment}</span></div>}
+                        {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment,value?.name ).toFixed(2)}</span></div>}
                         <div>
-                          {value?.name && <div><b>Name:</b> <span className="blue">{value?.name.charAt(0).toUpperCase() + value?.name.slice(1)}</span></div>}
-                          {value?.marketCap && <div><b>MarketCap:</b> <span className="blue">{value?.marketCap.toLocaleString()}</span></div>}
-                          {value?.price && <div><b>Price:</b> <span className="blue">${value?.price}</span></div>}
-                          <div className="twenty-four-change">
-                            <p><b>24hr change:</b></p>
-                        <p
-                            className={value?.twentyFourHour > 0 ? "text-success" : "text-danger"}>
-                            { value?.twentyFourHour.toFixed(2) }%
-                        </p>
-                        </div>
-                          {value?.volume && <div><b>Volume:</b> <span className="blue">{value?.volume.toLocaleString()}</span></div>}
-                          {value?.volume && <div><b>Initial Investment:</b> <span className="blue">{value?.investment}</span></div>}
-                          {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment,value?.name ).toFixed(2)}</span></div>}
-                          <div>
                           <InvestmentInput value={value} />
-                          
                         </div>
-                        </div>
-                      </div>  
-                      );
+                      </div>
+                    </div>  
+                  );
                 }
-             
             })}
             <div style={{ padding: '1em', backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center' }}>
               <div>Total Initial Investment: <span className="blue">${sumInvestment(values)}</span></div>
               <div>Total Current Investment: <span className="blue">${sumCurrentInvestment(values).toFixed(2)}</span></div>
-              <div>Total Gain/Loss: <span className="blue">${(sumInvestment(values) - sumCurrentInvestment(values)).toFixed(2)}</span></div>  
+              <div>Total Gain/Loss: <span className="blue">${(sumCurrentInvestment(values) - sumInvestment(values)).toFixed(2)}</span></div> 
+              <div>Percentage Gain/Loss: <span className="blue">{((sumCurrentInvestment(values) - sumInvestment(values)) / sumInvestment(values) * 100).toFixed(2)}%</span></div>
             </div>
-              
-              
-          </div>
-        
-        )}
-      </div>
+        </div>
+      )}
+    </div>
   );
 }
 
