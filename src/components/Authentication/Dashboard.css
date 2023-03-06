@@ -1,9 +1,5 @@
-/* .dashboard {
-    margin: 5em;
-} */
-
-.dashboard div {
-    margin-top: 7px;
+body {
+    color: #1976d2;
 }
 
 h1 {
@@ -15,11 +11,11 @@ h1 {
 }
 
 .favourites {
-    margin: 0 0 50px 0;
+    background-color: grey;
 }
 
 .form-dashboard {
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 }
 
 .button-dashboard {
@@ -30,19 +26,16 @@ h1 {
     text-align: center;
 }
 
+.individual-sections {
+    background-color: '#36393F';
+    border-radius: '15px';
+    text-align: 'center';
+}
+
 /* @media (min-width: 500px) { */
     .dashboard {
         margin: 2em;
     }
-    .dashboard div {
-        margin-top: 0;
-    }
-    .favourites {
-        display: inline;
-        margin-bottom: 5em;
-        background-color: green;
-    }
-
     .btns {
         display: inline;
     }

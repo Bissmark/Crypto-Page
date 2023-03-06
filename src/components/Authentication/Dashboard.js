@@ -11,6 +11,7 @@ import axios from 'axios';
 import { Stack } from "@mui/material";
 import Input from '@mui/material/Input';
 import { textAlign } from "@mui/system";
+import { InvestmentInput } from "../investmentInput";
 
 
 function Dashboard() {
@@ -96,7 +97,7 @@ function Dashboard() {
     <div className="dashboard" style={{flexWrap: 'wrap'}}>
       <div className="dashboard_container">
           <h1 className="profile-name">{ name }</h1>
-          <div>Email: <span className="blue">{ user?.email }</span></div>
+          <div style={{ textAlign: 'center' }}>Email: <span style={{ color: 'white'}}>{ user?.email }</span></div>
         </div>
         <h1>Portfolio</h1>
         {loadingFirebase && <span>Data: Loading</span>}
@@ -105,7 +106,8 @@ function Dashboard() {
             {values.map((value) => {
                 if(value.name){
                     return (
-                        <div className="favourites">
+                      <div style={{ backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center', marginBottom: '1em' }}>
+                        <div>
                           {value?.name && <div><b>Name:</b> <span className="blue">{value?.name.charAt(0).toUpperCase() + value?.name.slice(1)}</span></div>}
                           {value?.marketCap && <div><b>MarketCap:</b> <span className="blue">{value?.marketCap.toLocaleString()}</span></div>}
                           {value?.price && <div><b>Price:</b> <span className="blue">${value?.price}</span></div>}
@@ -119,19 +121,20 @@ function Dashboard() {
                           {value?.volume && <div><b>Volume:</b> <span className="blue">{value?.volume.toLocaleString()}</span></div>}
                           {value?.volume && <div><b>Initial Investment:</b> <span className="blue">{value?.investment}</span></div>}
                           {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment,value?.name )}</span></div>}
-                          
-                          <form className="form-dashboard" onSubmit={(e) => submitInvestment(e, value?.name)}>
-                            <Input sx={{color: '#1976d2', display: 'block', width: '50%'}} type="number" value={investmentAmount} onChange={(e) => setInvestmentAmount(e.target.value) }></Input>
-                              <Button sx={{ marginRight: '2em'}} variant="contained" type="submit">Submit</Button>
-                              <Button className="button-dashboard" variant="contained" color="error" onClick={() => removeDbEntry(value?.name)}>Delete</Button>                          </form>
+                          <InvestmentInput />
+                          <Button variant="contained" color="error" onClick={() => removeDbEntry(value?.name)}>Delete</Button>
                         </div>
+                      </div>  
                       );
                 }
              
             })}
-              <div className="center">Total Initial Investment: <span className="blue">{sumInvestment(values)}</span></div>
-              <div className="center">Total Current Investment: <span className="blue">{sumCurrentInvestment(values)}</span></div>
-              <div className="center">Total Gain/Loss: <span className="blue">{sumInvestment(values) - sumCurrentInvestment(values)}</span></div>
+            <div style={{ backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center'}}>
+              <div>Total Initial Investment: <span className="blue">{sumInvestment(values)}</span></div>
+              <div>Total Current Investment: <span className="blue">{sumCurrentInvestment(values)}</span></div>
+              <div>Total Gain/Loss: <span className="blue">{sumInvestment(values) - sumCurrentInvestment(values)}</span></div>  
+            </div>
+              
               
           </div>
         

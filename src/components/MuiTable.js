@@ -309,7 +309,7 @@ function EnhancedTable() {
                         >
                       </Checkbox>
                       </TableCell>
-                      <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat'}}>{coin.market_cap_rank}</TableCell>
+                      <TableCell align="center" sx={{ color: 'white;', fontFamily: 'Montserrat'}}>{coin.market_cap_rank}</TableCell>
                       <MediaQuery minWidth={600}>
                         <TableCell align="left" sx={{ color: 'white', fontFamily: 'Montserrat'}}><Link to={coin.id}>{coin.name}<img className='image-table' src={coin.image} /></Link></TableCell>  
                       </MediaQuery>

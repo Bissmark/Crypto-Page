@@ -38,8 +38,8 @@ const NavbarMobile = () => {
   return (
     <Box>
         <GetUserName {...{setName}} />
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar position="static" >
+        <Toolbar sx={{ backgroundColor: '#36393F'}}>
           <TotalCoinInfo />
           <Typography
             variant="h6"
