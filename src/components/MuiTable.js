@@ -204,7 +204,7 @@ function EnhancedTable() {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (newPage) => {
     setPage(newPage);
   };
 
@@ -248,10 +248,10 @@ function EnhancedTable() {
         <h1 className="coin-text"></h1>
         <form>
             <input
-            className="coin-input"
-            type='text'
-            onChange={ handleChange }
-            placeholder='Search...'
+              className="coin-input"
+              type='text'
+              onChange={ handleChange }
+              placeholder='Search...'
             />
         </form>
       </div>  

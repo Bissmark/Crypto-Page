@@ -106,7 +106,7 @@ function Dashboard() {
             {values.map((value) => {
                 if(value.name){
                     return (
-                      <div style={{ backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center', marginBottom: '1em' }}>
+                      <div style={{ backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center', marginBottom: '1em', padding: '1em', lineHeight: '2em' }}>
                         <div>
                           {value?.name && <div><b>Name:</b> <span className="blue">{value?.name.charAt(0).toUpperCase() + value?.name.slice(1)}</span></div>}
                           {value?.marketCap && <div><b>MarketCap:</b> <span className="blue">{value?.marketCap.toLocaleString()}</span></div>}
@@ -120,19 +120,21 @@ function Dashboard() {
                         </div>
                           {value?.volume && <div><b>Volume:</b> <span className="blue">{value?.volume.toLocaleString()}</span></div>}
                           {value?.volume && <div><b>Initial Investment:</b> <span className="blue">{value?.investment}</span></div>}
-                          {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment,value?.name )}</span></div>}
-                          <InvestmentInput />
-                          <Button variant="contained" color="error" onClick={() => removeDbEntry(value?.name)}>Delete</Button>
+                          {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment,value?.name ).toFixed(2)}</span></div>}
+                          <div>
+                          <InvestmentInput value={value} />
+                          
+                        </div>
                         </div>
                       </div>  
                       );
                 }
              
             })}
-            <div style={{ backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center'}}>
-              <div>Total Initial Investment: <span className="blue">{sumInvestment(values)}</span></div>
-              <div>Total Current Investment: <span className="blue">{sumCurrentInvestment(values)}</span></div>
-              <div>Total Gain/Loss: <span className="blue">{sumInvestment(values) - sumCurrentInvestment(values)}</span></div>  
+            <div style={{ padding: '1em', backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center' }}>
+              <div>Total Initial Investment: <span className="blue">${sumInvestment(values)}</span></div>
+              <div>Total Current Investment: <span className="blue">${sumCurrentInvestment(values).toFixed(2)}</span></div>
+              <div>Total Gain/Loss: <span className="blue">${(sumInvestment(values) - sumCurrentInvestment(values)).toFixed(2)}</span></div>  
             </div>
               
               

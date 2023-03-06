@@ -40,7 +40,7 @@ const NavbarMobile = () => {
         <GetUserName {...{setName}} />
       <AppBar position="static" >
         <Toolbar sx={{ backgroundColor: '#36393F'}}>
-          <TotalCoinInfo />
+          {/* <TotalCoinInfo /> */}
           <Typography
             variant="h6"
             noWrap
@@ -48,29 +48,11 @@ const NavbarMobile = () => {
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
           </Typography>
-          <ul>
-            {/* <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-            >
-              <MenuItem className='dropdown' to="/dashboard" component={RouterLink} onClick={handleClose}>Profile</MenuItem>
-              <MenuItem className='dropdown' to="/" component={RouterLink} onClick={handleCloseLogOut}>Logout</MenuItem>
-            </Menu>
-            { !name && <Button to="/login" component={RouterLink} onClick={handleClose}>Login</Button> }
-            { !name && <Button to="/register" component={RouterLink} onClick={handleClose}>Signup</Button> } */}
-          </ul>
-          <div>
-
-          </div>
-          
         <IconButton
             size="large"
-            edge="start"
+            edge="end"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
         >
           <Button
             variant='link'
@@ -87,7 +69,7 @@ const NavbarMobile = () => {
               open={open}
               onClose={handleClose}
             >
-            <MenuItem className="home-button" to="/" component={RouterLink}>Home</MenuItem>
+            <MenuItem className="home-button" to="/" onClick={handleClose} component={RouterLink}>Home</MenuItem>
             { name &&   <MenuItem className='dropdown' to="/dashboard" component={RouterLink} onClick={handleClose}>{name}</MenuItem> }
             <ThemeContext.Consumer>
             {({ changeTheme }) => (
