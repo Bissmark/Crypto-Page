@@ -11,7 +11,6 @@ export const getFirestoreCollectionEntry = (collectionName) => {
 }
 
 export const updateFirestoreCollectionEntry = async (collectionName, title, field, value) => {
-    // Add a new document in collection "cities"
     await updateDoc(doc(db, collectionName, title), {
         title,
         [field]:value
@@ -19,7 +18,6 @@ export const updateFirestoreCollectionEntry = async (collectionName, title, fiel
 }
 
 export const updateFirestoreCollectionArrayEntry = async (collectionName, title, field, value) => {
-    // Add a new document in collection "cities"
     console.log(123, value, field)
     await updateDoc(doc(db, collectionName, title), {
         title,

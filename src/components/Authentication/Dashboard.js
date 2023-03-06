@@ -4,19 +4,22 @@ import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import { auth, db } from "../../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
-import { getFirestoreCollectionEntry, deleteFirestoreCollectionEntry } from "../firestore";
+import { getFirestoreCollectionEntry, deleteFirestoreCollectionEntry, updateFirestoreCollectionEntry } from "../firestore";
 import Button from '@mui/material/Button';
-import {InvestmentInput} from "../investmentInput"
+//import {InvestmentInput} from "../investmentInput"
 import axios from 'axios';
+import { Stack } from "@mui/material";
+import Input from '@mui/material/Input';
+import { textAlign } from "@mui/system";
 
 
 function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
   const [coins, setCoins] = useState([]);
   const [name, setName] = useState("");
+  const [investmentAmount, setInvestmentAmount] = useState(0)
   const navigate = useNavigate();
-  const [values, loadingFirebase, errorFB, snaphot] =
-  getFirestoreCollectionEntry("favourites");
+  const [values, loadingFirebase, errorFB, snaphot] = getFirestoreCollectionEntry("favourites");
   
   const fetchUserName = async () => {
     try {
@@ -52,6 +55,11 @@ function Dashboard() {
     }, 0);
   }
 
+  const submitInvestment = (e, name) => {
+    e.preventDefault();
+    updateFirestoreCollectionEntry('favourites', name, 'investment', investmentAmount)
+  }
+
   const sumCurrentInvestment = (items) => {
     console.log('items', items)
     return items.reduce( function(a, b){
@@ -85,7 +93,7 @@ function Dashboard() {
   }, [user, loading]);
 
   return (
-    <div className="dashboard" style={{flexWrap: 'wrap', margin: '5em'}}>
+    <div className="dashboard" style={{flexWrap: 'wrap'}}>
       <div className="dashboard_container">
           <h1 className="profile-name">{ name }</h1>
           <div>Email: <span className="blue">{ user?.email }</span></div>
@@ -97,7 +105,7 @@ function Dashboard() {
             {values.map((value) => {
                 if(value.name){
                     return (
-                        <div className="favourites" style={{ width: '20%'}}>
+                        <div className="favourites">
                           {value?.name && <div><b>Name:</b> <span className="blue">{value?.name.charAt(0).toUpperCase() + value?.name.slice(1)}</span></div>}
                           {value?.marketCap && <div><b>MarketCap:</b> <span className="blue">{value?.marketCap.toLocaleString()}</span></div>}
                           {value?.price && <div><b>Price:</b> <span className="blue">${value?.price}</span></div>}
@@ -111,16 +119,20 @@ function Dashboard() {
                           {value?.volume && <div><b>Volume:</b> <span className="blue">{value?.volume.toLocaleString()}</span></div>}
                           {value?.volume && <div><b>Initial Investment:</b> <span className="blue">{value?.investment}</span></div>}
                           {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment,value?.name )}</span></div>}
-                          <InvestmentInput value={value}/>
-                          <Button variant="contained" color="error" onClick={() => removeDbEntry(value?.name)}>Delete</Button>
+                          
+                          <form className="form-dashboard" onSubmit={(e) => submitInvestment(e, value?.name)}>
+                            <Input sx={{color: '#1976d2', display: 'block', width: '50%'}} type="number" value={investmentAmount} onChange={(e) => setInvestmentAmount(e.target.value) }></Input>
+                              <Button sx={{ marginRight: '2em'}} variant="contained" type="submit">Submit</Button>
+                              <Button className="button-dashboard" variant="contained" color="error" onClick={() => removeDbEntry(value?.name)}>Delete</Button>                          </form>
                         </div>
                       );
                 }
              
             })}
-              <div>Total Initial Investment: <span className="blue">{sumInvestment(values)}</span></div>
-              <div>Total Current Investment: <span className="blue">{sumCurrentInvestment(values)}</span></div>
-              <div>Total Gain/Loss: <span className="blue">{sumInvestment(values) - sumCurrentInvestment(values)}</span></div>
+              <div className="center">Total Initial Investment: <span className="blue">{sumInvestment(values)}</span></div>
+              <div className="center">Total Current Investment: <span className="blue">{sumCurrentInvestment(values)}</span></div>
+              <div className="center">Total Gain/Loss: <span className="blue">{sumInvestment(values) - sumCurrentInvestment(values)}</span></div>
+              
           </div>
         
         )}

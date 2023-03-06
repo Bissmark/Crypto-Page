@@ -188,6 +188,7 @@ a:hover {
 
 .image-table {
   height: 25px;
+  display: block;
 }
 
 .left-area p {
@@ -240,4 +241,10 @@ a:hover {
 
 .MuiTablePagination-root {
   background-color: #e2e2e2;
+}
+
+@media (min-width: 768px) {
+  .graph-table {
+    display:none;
+  }
 }

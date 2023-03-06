@@ -1,5 +1,13 @@
+/* .dashboard {
+    margin: 5em;
+} */
+
 .dashboard div {
     margin-top: 7px;
+}
+
+h1 {
+    text-align: center;
 }
 
 .profile-name {
@@ -9,3 +17,33 @@
 .favourites {
     margin: 0 0 50px 0;
 }
+
+.form-dashboard {
+    margin-bottom: 2em;
+}
+
+.button-dashboard {
+    margin-right: 1em;
+}
+
+.center {
+    text-align: center;
+}
+
+/* @media (min-width: 500px) { */
+    .dashboard {
+        margin: 2em;
+    }
+    .dashboard div {
+        margin-top: 0;
+    }
+    .favourites {
+        display: inline;
+        margin-bottom: 5em;
+        background-color: green;
+    }
+
+    .btns {
+        display: inline;
+    }
+/* } */

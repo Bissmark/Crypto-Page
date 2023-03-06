@@ -7,6 +7,8 @@ import TotalCoinInfo from '../TotalCoinInfo';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import MenuIcon from '@mui/icons-material/Menu';
+import { IconButton } from '@mui/material';
 import { Link as RouterLink } from "react-router-dom";
 import { ThemeContext, themes } from '../../contexts/ThemeContext';
 import { logout } from "../../firebase";
@@ -43,7 +45,7 @@ const SearchAppBar = () => {
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
           </Typography>
-          <ul>
+          <div>
             <Button className="home-button" to="/" component={RouterLink}>Home</Button>
             <ThemeContext.Consumer>
             {({ changeTheme }) => (
@@ -67,8 +69,8 @@ const SearchAppBar = () => {
             >
               {name}
             </Button>}
-            
-            <Menu
+            </div>
+          <Menu
               id="basic-menu"
               anchorEl={anchorEl}
               open={open}
@@ -79,7 +81,6 @@ const SearchAppBar = () => {
             </Menu>
             { !name && <Button to="/login" component={RouterLink} onClick={handleClose}>Login</Button> }
             { !name && <Button to="/register" component={RouterLink} onClick={handleClose}>Signup</Button> }
-          </ul>
         </Toolbar>
       </AppBar>
     </Box>

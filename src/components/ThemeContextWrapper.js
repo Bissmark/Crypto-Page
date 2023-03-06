@@ -1,3 +1,5 @@
+import { LightMode } from "@mui/icons-material";
+import DarkMode from "@mui/icons-material/DarkMode";
 import React, { useState, useEffect } from "react";
 import { ThemeContext, themes } from '../contexts/ThemeContext';
 
