@@ -6,12 +6,11 @@ import { createTheme } from "@mui/material";
 
 export const InvestmentInput = ({value}) => {
     const [investmentAmount, setInvestmentAmount] = useState(0)
-    console.log(value);
 
     const submitInvestment = (e, name) => {
         e.preventDefault();
         updateFirestoreCollectionEntry('favourites', name, 'investment', investmentAmount)
-        console.log(value?.name)
+        // console.log(value?.name)
     }
 
     const removeDbEntry = (name) => {

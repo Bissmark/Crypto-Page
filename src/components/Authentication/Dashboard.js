@@ -7,7 +7,7 @@ import { query, collection, getDocs, where } from "firebase/firestore";
 import { getFirestoreCollectionEntry, deleteFirestoreCollectionEntry, updateFirestoreCollectionEntry } from "../firestore";
 import axios from 'axios';
 import { InvestmentInput } from "../investmentInput";
-
+import MediaQuery from 'react-responsive';
 
 function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
@@ -101,25 +101,50 @@ function Dashboard() {
           {values.map((value) => {
               if(value.name) {
                   return (
-                    <div style={{ backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center', marginBottom: '1em', padding: '1em', lineHeight: '2em' }}>
-                      <div>
-                        {value?.name && <div><b>Name:</b> <span className="blue">{value?.name.charAt(0).toUpperCase() + value?.name.slice(1)}</span></div>}
-                        {value?.marketCap && <div><b>MarketCap:</b> <span className="blue">{value?.marketCap.toLocaleString()}</span></div>}
-                        {value?.price && <div><b>Price:</b> <span className="blue">${value?.price}</span></div>}
-                        <div className="twenty-four-change">
-                          <p><b>24hr change:</b></p>
-                          <p className={value?.twentyFourHour > 0 ? "text-success" : "text-danger"}>
-                          { value?.twentyFourHour.toFixed(2) }%
-                          </p>
-                        </div>
-                        {value?.volume && <div><b>Volume:</b> <span className="blue">{value?.volume.toLocaleString()}</span></div>}
-                        {value?.volume && <div><b>Initial Investment:</b> <span className="blue">{value?.investment}</span></div>}
-                        {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment,value?.name ).toFixed(2)}</span></div>}
+                    <span>
+                    <MediaQuery maxWidth={500}>
+                      <div style={{ backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center', marginBottom: '1em', padding: '1em', lineHeight: '2em' }}>
                         <div>
-                          <InvestmentInput value={value} />
+                          {value?.name && <div><b>Name:</b> <span className="blue">{value?.name.charAt(0).toUpperCase() + value?.name.slice(1)}</span></div>}
+                          {value?.marketCap && <div><b>MarketCap:</b> <span className="blue">{value?.marketCap.toLocaleString()}</span></div>}
+                          {value?.price && <div><b>Price:</b> <span className="blue">${value?.price}</span></div>}
+                          <div className="twenty-four-change">
+                            <p><b>24hr change:</b></p>
+                            <p className={value?.twentyFourHour > 0 ? "text-success" : "text-danger"}>
+                            { value?.twentyFourHour.toFixed(2) }%
+                            </p>
+                          </div>
+                          {value?.volume && <div><b>Volume:</b> <span className="blue">{value?.volume.toLocaleString()}</span></div>}
+                          {value?.volume && <div><b>Initial Investment:</b> <span className="blue">{value?.investment}</span></div>}
+                          {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment,value?.name ).toFixed(2)}</span></div>}
+                          <div>
+                            <InvestmentInput value={value} />
+                          </div>
                         </div>
-                      </div>
-                    </div>  
+                      </div>   
+                    </MediaQuery>
+                    <MediaQuery minWidth={600}>
+                      <div style={{ backgroundColor: '#36393F', borderRadius: '15px', marginBottom: '1em', padding: '1em', lineHeight: '2em', maxWidth: '15em', display: 'inline-flex', marginRight: '2em' }}>
+                        <div>
+                          {value?.name && <div><b>Name:</b> <span className="blue">{value?.name.charAt(0).toUpperCase() + value?.name.slice(1)}</span></div>}
+                          {value?.marketCap && <div><b>MarketCap:</b> <span className="blue">{value?.marketCap.toLocaleString()}</span></div>}
+                          {value?.price && <div><b>Price:</b> <span className="blue">${value?.price}</span></div>}
+                          <div className="twenty-four-change">
+                            <p><b>24hr change:</b></p>
+                            <p className={value?.twentyFourHour > 0 ? "text-success" : "text-danger"}>
+                            { value?.twentyFourHour.toFixed(2) }%
+                            </p>
+                          </div>
+                          {value?.volume && <div><b>Volume:</b> <span className="blue">{value?.volume.toLocaleString()}</span></div>}
+                          {value?.volume && <div><b>Initial Investment:</b> <span className="blue">{value?.investment}</span></div>}
+                          {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment,value?.name ).toFixed(2)}</span></div>}
+                          <div>
+                            <InvestmentInput value={value} />
+                          </div>
+                        </div>
+                      </div> 
+                    </MediaQuery>
+                     </span>
                   );
                 }
             })}

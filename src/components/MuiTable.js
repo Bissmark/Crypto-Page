@@ -141,8 +141,7 @@ function EnhancedTable() {
   const [coins, setCoins] = useState([]);
   const [search, setSearch] = useState('');
 
-  const [values, loadingFirebase, errorFB, snaphot] =
-    getFirestoreCollectionEntry("favourites");
+  const [values, loadingFirebase, errorFB, snaphot] = getFirestoreCollectionEntry("favourites");
 
   useEffect(() => {
     axios
@@ -192,7 +191,7 @@ function EnhancedTable() {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (newPage) => {
+  const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
@@ -313,11 +312,6 @@ function EnhancedTable() {
                       sx={ coin.price_change_percentage_24h > 0 ? {color: 'green !important'} : {color: 'red !important', width: '1%'}}>
                       { coin.price_change_percentage_24h.toFixed(2) }%
                     </TableCell>
-                    {/* <MediaQuery maxWidth={500}>
-                      <TableCell align="center" sx={{ display: { xs: 'none'}, color: 'white', fontFamily: 'Montserrat' }}>${ coin.total_volume.toLocaleString() }</TableCell>
-                      <TableCell align="center" sx={{ display: { xs: 'none'}, color: 'white', fontFamily: 'Montserrat' }}>${ coin.market_cap.toLocaleString() }</TableCell>  
-                    </MediaQuery> */}
-                    {/* <MediaQuery minWidth={600}> */}
                       <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.total_volume.toLocaleString() }</TableCell>
                       <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.market_cap.toLocaleString() }</TableCell>
                       <TableCell key={coin.name}>
@@ -327,7 +321,6 @@ function EnhancedTable() {
                         <YAxis hide={true} domain={['dataMin', 'dataMax']} />
                         </LineChart> 
                       </TableCell>
-                    {/* </MediaQuery> */}
                   </TableRow>
                 );
               })}
