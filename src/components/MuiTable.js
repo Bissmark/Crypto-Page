@@ -295,7 +295,14 @@ function EnhancedTable() {
                     </TableCell>
                     <TableCell align="center" sx={{ color: 'white;', fontFamily: 'Montserrat'}}>{coin.market_cap_rank}</TableCell>
                     <MediaQuery minWidth={600}>
-                      <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat'}}><Link to={coin.id}><img className='image-table' src={coin.image} />{coin.name}</Link></TableCell>  
+                      <TableCell 
+                        sx={{ color: 'white', fontFamily: 'Montserrat'}}
+                      >
+                      <Link to={coin.id}>
+                        <img className='image-table' src={coin.image} />
+                        {coin.name}
+                      </Link>
+                      </TableCell>  
                     </MediaQuery>
                     <MediaQuery maxWidth={500}>
                     <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat'}}><Link to={coin.id}><img className='image-table' src={coin.image} /></Link></TableCell>  
