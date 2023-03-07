@@ -33,12 +33,12 @@ const SearchAppBar = () => {
     }
 
   return (
-    <Box>
+    <Box sx={{ flexGrow: 1 }}>
       <GetUserName {...{setName}} />
       <AppBar position="static">
-        <Toolbar sx={{ backgroundColor: '#36393F'}}>
+        <Toolbar sx={{ backgroundColor: '#36393F', flexGrow: '1'}}>
           <TotalCoinInfo />
-          <div style={{ marginLeft: '15em'}}>
+          <Typography style={{ flex: 1 }} component="div"></Typography>
             <Button to="/" component={RouterLink}>Home</Button>
             <ThemeContext.Consumer>
             {({ changeTheme }) => (
@@ -72,7 +72,7 @@ const SearchAppBar = () => {
             </Menu>
             { !name && <Button to="/login" component={RouterLink} onClick={handleClose}>Login</Button> }
             { !name && <Button to="/register" component={RouterLink} onClick={handleClose}>Signup</Button> }
-          </div>
+
         </Toolbar>
       </AppBar>
     </Box>

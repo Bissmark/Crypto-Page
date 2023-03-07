@@ -84,12 +84,10 @@ const NavbarMobile = () => {
             </Button>
             )}
           </ThemeContext.Consumer>
-            
             { name &&  <MenuItem className='dropdown' to="/" component={RouterLink} onClick={handleCloseLogOut}>Logout</MenuItem> }
             { !name && <MenuItem to="/login" component={RouterLink} onClick={handleClose}>Login</MenuItem> }
             { !name && <MenuItem to="/register" component={RouterLink} onClick={handleClose}>Signup</MenuItem> }
             </Menu>
-            
         </IconButton>
         </Toolbar>
       </AppBar>
