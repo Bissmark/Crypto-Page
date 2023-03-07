@@ -3,6 +3,8 @@ import axios from "axios";
 import { useParams } from "react-router";
 import moment from 'moment';
 import { Tooltip, YAxis, AreaChart, Area, CartesianGrid } from "recharts";
+import MediaQuery from 'react-responsive';
+import { margin, textAlign } from "@mui/system";
 
 const CoinPage = () => {
     const [coins, setCoins] = useState([]);
@@ -32,8 +34,8 @@ const CoinPage = () => {
 
     const Toolip = props =>  
         (! props.active) ? null :  ( 
-        <div style={{ fontFamily: 'Montserrat',  color : 'white',  fontSize: '20px', fontFamily: 'Montserrat', fontWeight: 'bold' }} >
-        {props.payload.map(v => <p>{v.value}</p>)}
+        <div style={{ fontFamily: 'Montserrat',  color : 'white',  fontSize: '15px', fontFamily: 'Montserrat', fontWeight: 'bold' }} >
+        {props.payload.map((v, i) => <p key={i}>{v.value}</p>)}
         </div> 
     )
     
@@ -42,35 +44,74 @@ const CoinPage = () => {
             <div className="color-background">
                 <h1 className="title-coin">{coins.name} <img src={ coins.image.thumb } alt={ coins.name }></img></h1>
                 <div className="text-box">
-                    <div className="next-to">
-                        <p>Rank: <span className="blue">{coins.coingecko_rank}</span></p>
-                        <p>Current Price: <span className="blue">${coins.market_data.current_price.usd}</span></p>
-                        <div className="twenty-four-change">
-                            <p>24hr change: </p>
-                        <p
-                            className={coins.market_data.price_change_percentage_24h > 0 ? "text-success" : "text-danger"}>
-                            { coins.market_data.price_change_percentage_24h.toFixed(2) }%
-                        </p> 
+                    <MediaQuery minWidth={600}>
+                        <div className="next-to">
+                            <p>Rank: <span className="blue">{coins.coingecko_rank}</span></p>
+                            <p>Current Price: <span className="blue">${coins.market_data.current_price.usd}</span></p>
+                            <div className="twenty-four-change">
+                                <p>24hr change: </p>
+                            <p
+                                className={coins.market_data.price_change_percentage_24h > 0 ? "text-success" : "text-danger"}>
+                                { coins.market_data.price_change_percentage_24h.toFixed(2) }%
+                            </p> 
+                            </div>
+                            <p>Market Cap: <span className="blue">${coins.market_data.market_cap.usd.toLocaleString()}</span></p>
+                            <p>Circulating Supply: <span className="blue">{coins.market_data.circulating_supply.toLocaleString()}</span></p>
+                            <p>Total Supply: <span className="blue">{coins.market_data.total_supply.toLocaleString()}</span></p>
                         </div>
-                        <p>Market Cap: <span className="blue">${coins.market_data.market_cap.usd.toLocaleString()}</span></p>
-                        <p>Circulating Supply: <span className="blue">{coins.market_data.circulating_supply.toLocaleString()}</span></p>
-                        <p>Total Supply: <span className="blue">{coins.market_data.total_supply.toLocaleString()}</span></p>
-                    </div>
-                    <div className="next-to">
-                        <p>All-Time High: <span className="blue">${coins.market_data.ath.usd.toLocaleString()}</span></p>
-                        <p>All-Time High Data: <span className="blue">{moment(coins.market_data.ath_date.usd).format('Do MMM YY') }</span></p>
-                        <p>All-Time Low: <span className="blue">${coins.market_data.atl.usd.toLocaleString()}</span></p>
-                        <p>All-Time Low Data: <span className="blue">{moment(coins.market_data.atl_date.usd).format('Do MMM YY')}</span></p>
-                        <p className="hidden"> sadad</p>
-                        <p className="hidden"> sadsad</p>
-                    </div>
+                    </MediaQuery>
+                    <MediaQuery maxWidth={500}>
+                        <div style={{ padding: '0 0 0 2em'}}>
+                            <p>Rank: <span className="blue">{coins.coingecko_rank}</span></p>
+                            <p>Current Price: <span className="blue">${coins.market_data.current_price.usd}</span></p>
+                            <div className="twenty-four-change">
+                                <p>24hr change: </p>
+                            <p
+                                className={coins.market_data.price_change_percentage_24h > 0 ? "text-success" : "text-danger"}>
+                                { coins.market_data.price_change_percentage_24h.toFixed(2) }%
+                            </p> 
+                            </div>
+                            <p>Market Cap: <span className="blue">${coins.market_data.market_cap.usd.toLocaleString()}</span></p>
+                            <p>Circulating Supply: <span className="blue">{coins.market_data.circulating_supply.toLocaleString()}</span></p>
+                            <p>Total Supply: <span className="blue">{coins.market_data.total_supply.toLocaleString()}</span></p>
+                        </div>
+                    </MediaQuery>
+                    
+                    <MediaQuery minWidth={600}>
+                        <div className="next-to">
+                            <p>All-Time High: <span className="blue">${coins.market_data.ath.usd.toLocaleString()}</span></p>
+                            <p>All-Time High Data: <span className="blue">{moment(coins.market_data.ath_date.usd).format('Do MMM YY') }</span></p>
+                            <p>All-Time Low: <span className="blue">${coins.market_data.atl.usd.toLocaleString()}</span></p>
+                            <p>All-Time Low Data: <span className="blue">{moment(coins.market_data.atl_date.usd).format('Do MMM YY')}</span></p>
+                            <p className="hidden"> sadad</p>
+                            <p className="hidden"> sadsad</p>    
+                        </div>
+                    </MediaQuery>
+                    <MediaQuery maxWidth={500}>
+                        <div style={{ padding: '0 0 0 2em'}}>
+                            <p>All-Time High: <span className="blue">${coins.market_data.ath.usd.toLocaleString()}</span></p>
+                            <p>All-Time High Data: <span className="blue">{moment(coins.market_data.ath_date.usd).format('Do MMM YY') }</span></p>
+                            <p>All-Time Low: <span className="blue">${coins.market_data.atl.usd.toLocaleString()}</span></p>
+                            <p>All-Time Low Data: <span className="blue">{moment(coins.market_data.atl_date.usd).format('Do MMM YY')}</span></p> 
+                        </div>
+                    </MediaQuery>
                 </div>
+                <MediaQuery minWidth={600}>
                     <AreaChart width={960} height={300} data={coinPricingData}>
                         <Area type="monotone" dataKey="price" stroke={priceIncrease ? "#82ca9d" : "red"} fill={priceIncrease ? "#82ca9d" : "red"} dot={false} />
                         <Tooltip content={ Toolip } cursor={ false } wrapperStyle={{ outline: 'none' }} />
                         <YAxis width={80} type="number" tickFormatter={(value) => value.toFixed(2)} domain={['dataMin', 'auto']} />
                         <CartesianGrid stroke="#000" strokeDasharray="5 5" />
                     </AreaChart>
+                </MediaQuery>
+                <MediaQuery maxWidth={500}>
+                    <AreaChart style={{ marginTop: '3em'}} width={340} height={200} data={coinPricingData}>
+                        <Area type="monotone" dataKey="price" stroke={priceIncrease ? "#82ca9d" : "red"} fill={priceIncrease ? "#82ca9d" : "red"} dot={false} />
+                        <Tooltip content={ Toolip } cursor={ false } wrapperStyle={{ outline: 'none' }} />
+                        <YAxis style={{ fontSize: '10px'}} width={80} type="number" tickFormatter={(value) => value.toFixed(2)} domain={['dataMin', 'auto']} />
+                        <CartesianGrid stroke="#000" strokeDasharray="5 5" />
+                    </AreaChart>
+                </MediaQuery>   
             </div>
             
         </div>

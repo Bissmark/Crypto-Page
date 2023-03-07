@@ -123,11 +123,31 @@ function Dashboard() {
                   );
                 }
             })}
-            <div style={{ padding: '1em', backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center' }}>
-              <div>Total Initial Investment: <span className="blue">${sumInvestment(values)}</span></div>
-              <div>Total Current Investment: <span className="blue">${sumCurrentInvestment(values).toFixed(2)}</span></div>
-              <div>Total Gain/Loss: <span className="blue">${(sumCurrentInvestment(values) - sumInvestment(values)).toFixed(2)}</span></div> 
-              <div>Percentage Gain/Loss: <span className="blue">{((sumCurrentInvestment(values) - sumInvestment(values)) / sumInvestment(values) * 100).toFixed(2)}%</span></div>
+            <div style={{ padding: '0.5em', backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center' }}>
+              <div>
+                Total Initial Investment: 
+                <span style={{marginLeft: '0.5em'}} className="blue">
+                  ${sumInvestment(values)}
+                </span>
+                </div>
+              <div>
+                Total Current Investment: 
+                <span style={{marginLeft: '0.5em'}} className="blue">
+                  ${sumCurrentInvestment(values).toFixed(2)}
+                </span>
+              </div>
+              <div>
+                Total Gain/Loss: 
+                <span style={{marginLeft: '0.5em'}} className={(sumCurrentInvestment(values) - sumInvestment(values)).toFixed(2) > 0 ? "text-success" : "text-danger"}>
+                  ${(sumCurrentInvestment(values) - sumInvestment(values)).toFixed(2)}
+                </span>
+              </div> 
+              <div>
+                Percentage Gain/Loss: 
+                <span style={{marginLeft: '0.5em'}} className={((sumCurrentInvestment(values) - sumInvestment(values)) / sumInvestment(values) * 100).toFixed(2) > 0 ? "text-success" : "text-danger"}>
+                  {((sumCurrentInvestment(values) - sumInvestment(values)) / sumInvestment(values) * 100).toFixed(2)}%
+                </span>
+              </div>
             </div>
         </div>
       )}

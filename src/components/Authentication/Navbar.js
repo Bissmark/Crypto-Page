@@ -33,20 +33,13 @@ const SearchAppBar = () => {
     }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-        <GetUserName {...{setName}} />
+    <Box>
+      <GetUserName {...{setName}} />
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{ backgroundColor: '#36393F'}}>
           <TotalCoinInfo />
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
-          </Typography>
-          <div>
-            <Button className="home-button" to="/" component={RouterLink}>Home</Button>
+          <div style={{ marginLeft: '15em'}}>
+            <Button to="/" component={RouterLink}>Home</Button>
             <ThemeContext.Consumer>
             {({ changeTheme }) => (
             <Button
@@ -61,7 +54,6 @@ const SearchAppBar = () => {
             </ThemeContext.Consumer>
             { name && 
             <Button
-              id="basic-button"
               aria-controls={open ? 'basic-menu' : undefined}
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
@@ -69,7 +61,6 @@ const SearchAppBar = () => {
             >
               {name}
             </Button>}
-            </div>
           <Menu
               id="basic-menu"
               anchorEl={anchorEl}
@@ -81,6 +72,7 @@ const SearchAppBar = () => {
             </Menu>
             { !name && <Button to="/login" component={RouterLink} onClick={handleClose}>Login</Button> }
             { !name && <Button to="/register" component={RouterLink} onClick={handleClose}>Signup</Button> }
+          </div>
         </Toolbar>
       </AppBar>
     </Box>

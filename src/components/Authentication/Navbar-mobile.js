@@ -61,8 +61,6 @@ const NavbarMobile = () => {
             startIcon={<MenuIcon />}
           > 
           </Button>
-          
-          
           <Menu
               id="basic-menu"
               anchorEl={anchorEl}

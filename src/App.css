@@ -29,9 +29,8 @@ body {
 }
 
 .coin-input {
-  padding-left: 16px;
+  /* padding-left: 16px; */
   width: 300px;
-  height: 50px;
   border-radius: 4px;
   border: none;
   background-image: linear-gradient(
@@ -97,6 +96,7 @@ a:hover {
 
 .blue {
   color: #ffffff;
+  margin-left: 0.3em;
 }
 
 p {
@@ -186,18 +186,13 @@ p {
 }
 
 .twenty-four-change p {
-  display: inline-block;
-  margin: 0 15px 0 0;
+  display: inline;
+  margin-right: 0.5em;
 }
 
 .image-table {
   height: 25px;
   display: block;
-}
-
-.left-area p {
-  display: inline-block;
-  margin: 0 50px 0 0;
 }
 
 .right-area {
@@ -251,4 +246,12 @@ p {
   .graph-table {
     display:none;
   }
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: #1976d2 !important;
+}
+
+.total-coin-info {
+  margin-right: 1em;
 }
