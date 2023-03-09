@@ -17,11 +17,10 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import SearchBar from '../SearchBar';
 
-const SearchAppBar = ({ search, setSearch }) => {
+const SearchAppBar = () => {
     const [darkMode, setDarkMode] = useState(true);
     const [name, setName] = useState("");
     const [anchorEl, setAnchorEl] = useState(null);
-    //const [search, setSearch] = useState('');
 
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -42,7 +41,7 @@ const SearchAppBar = ({ search, setSearch }) => {
       <AppBar position="fixed">
         <Toolbar sx={{ backgroundColor: '#36393F', flexGrow: '1'}}>
           <TotalCoinInfo />
-          <SearchBar search={search} setSearch={setSearch} />
+          <SearchBar />
           <Typography style={{ flex: 1 }}></Typography>
             <Button to="/" component={RouterLink}><HomeSharpIcon /></Button>
             <ThemeContext.Consumer>

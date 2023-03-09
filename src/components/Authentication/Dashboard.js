@@ -79,7 +79,7 @@ function Dashboard() {
     const currentCoin = coins.filter(coin => coin.id === name)[0]
     if(!currentCoin || !currentCoin.price_change_percentage_24h) return initialInvestment
     // console.log(currentCoin)
-    return (1 + currentCoin.price_change_percentage_24h /100) * initialInvestment
+    return ((1 + currentCoin.price_change_percentage_24h /100) * initialInvestment).toFixed(2)
   }
 
   useEffect(() => {
@@ -137,7 +137,7 @@ function Dashboard() {
                           </div>
                           {value?.volume && <div><b>Volume:</b> <span className="blue">{value?.volume.toLocaleString()}</span></div>}
                           {value?.volume && <div><b>Initial Investment:</b> <span className="blue">{value?.investment}</span></div>}
-                          {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment,value?.name ).toFixed(2)}</span></div>}
+                          {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment,value?.name )}</span></div>}
                           <div key={value.id}>
                             <InvestmentInput key={value.id} value={value} />
                           </div>

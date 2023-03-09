@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { TextField } from "@mui/material";
 
-const SearchBar = () => {
-    const [search, setSearch] = useState('');
+const SearchBar = ({ search, setSearch, coins }) => {
+    //const [search, setSearch] = useState('');
 
     const handleChange = (e) => {
         e.preventDefault();
