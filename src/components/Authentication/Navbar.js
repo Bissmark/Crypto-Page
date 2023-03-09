@@ -7,17 +7,21 @@ import TotalCoinInfo from '../TotalCoinInfo';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import MenuIcon from '@mui/icons-material/Menu';
-import { IconButton } from '@mui/material';
 import { Link as RouterLink } from "react-router-dom";
 import { ThemeContext, themes } from '../../contexts/ThemeContext';
 import { logout } from "../../firebase";
 import GetUserName from "./GetUserName";
+import HomeSharpIcon from '@mui/icons-material/HomeSharp';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import SearchBar from '../SearchBar';
 
-const SearchAppBar = () => {
+const SearchAppBar = ({ search, setSearch }) => {
     const [darkMode, setDarkMode] = useState(true);
     const [name, setName] = useState("");
     const [anchorEl, setAnchorEl] = useState(null);
+    //const [search, setSearch] = useState('');
 
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -33,13 +37,14 @@ const SearchAppBar = () => {
     }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, marginBottom: '7em' }}>
       <GetUserName {...{setName}} />
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar sx={{ backgroundColor: '#36393F', flexGrow: '1'}}>
           <TotalCoinInfo />
-          <Typography style={{ flex: 1 }} component="div"></Typography>
-            <Button to="/" component={RouterLink}>Home</Button>
+          <SearchBar search={search} setSearch={setSearch} />
+          <Typography style={{ flex: 1 }}></Typography>
+            <Button to="/" component={RouterLink}><HomeSharpIcon /></Button>
             <ThemeContext.Consumer>
             {({ changeTheme }) => (
             <Button
@@ -48,7 +53,7 @@ const SearchAppBar = () => {
                 changeTheme(darkMode ? themes.light : themes.dark);
               }}
             >
-              Dark/Light
+              { darkMode ? <DarkModeIcon /> : <LightModeIcon />}
             </Button>
             )}
             </ThemeContext.Consumer>
@@ -59,7 +64,7 @@ const SearchAppBar = () => {
               aria-expanded={open ? 'true' : undefined}
               onClick={handleClick}
             >
-              {name}
+              {<AccountCircleIcon />}
             </Button>}
           <Menu
               id="basic-menu"
@@ -67,12 +72,11 @@ const SearchAppBar = () => {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem className='dropdown' to="/dashboard" component={RouterLink} onClick={handleClose}>Profile</MenuItem>
+              <MenuItem className='dropdown' to="/dashboard" component={RouterLink} onClick={handleClose}>{name}'s Portfolio</MenuItem>
               <MenuItem className='dropdown' to="/" component={RouterLink} onClick={handleCloseLogOut}>Logout</MenuItem>
             </Menu>
             { !name && <Button to="/login" component={RouterLink} onClick={handleClose}>Login</Button> }
             { !name && <Button to="/register" component={RouterLink} onClick={handleClose}>Signup</Button> }
-
         </Toolbar>
       </AppBar>
     </Box>

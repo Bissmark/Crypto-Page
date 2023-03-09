@@ -9,15 +9,14 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import { IconButton, useTheme } from '@mui/material';
 import { Link as RouterLink } from "react-router-dom";
 import { ThemeContext, themes } from '../../contexts/ThemeContext';
 import { logout } from "../../firebase";
 import GetUserName from "./GetUserName";
 import { LightMode } from '@mui/icons-material';
+import SearchBar from '../SearchBar';
 
 const NavbarMobile = () => {
-  const theme = useTheme();
     const [darkMode, setDarkMode] = useState(true);
     const [name, setName] = useState("");
     const [anchorEl, setAnchorEl] = useState(null);
@@ -36,8 +35,8 @@ const NavbarMobile = () => {
     }
 
   return (
-    <Box>
-        <GetUserName {...{setName}} />
+    <Box sx={{ marginBottom: '3em'}}>
+      <GetUserName {...{setName}} />
       <AppBar position="static" >
         <Toolbar sx={{ backgroundColor: '#36393F'}}>
           {/* <TotalCoinInfo /> */}
@@ -48,14 +47,7 @@ const NavbarMobile = () => {
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
           </Typography>
-        <IconButton
-            size="large"
-            edge="end"
-            color="inherit"
-            aria-label="menu"
-        >
           <Button
-            variant='link'
             size='extra-large'
             onClick={handleClick}
             startIcon={<MenuIcon />}
@@ -75,12 +67,9 @@ const NavbarMobile = () => {
               onClick={() => {
                 setDarkMode(!darkMode);
                 changeTheme(darkMode ? themes.light : themes.dark);
-                // theme.palette.mode === 'dark' ? <DarkModeIcon /> : <LightMode />
               }}
             >
-              {/* {theme.palette.mode} mode */}
-              {theme.palette.mode === 'dark' ? <DarkModeIcon /> : <LightMode />}  
-              
+              { darkMode ? <DarkModeIcon /> : <LightMode />} 
             </Button>
             )}
           </ThemeContext.Consumer>
@@ -88,7 +77,7 @@ const NavbarMobile = () => {
             { !name && <MenuItem to="/login" component={RouterLink} onClick={handleClose}>Login</MenuItem> }
             { !name && <MenuItem to="/register" component={RouterLink} onClick={handleClose}>Signup</MenuItem> }
             </Menu>
-        </IconButton>
+            <SearchBar />
         </Toolbar>
       </AppBar>
     </Box>

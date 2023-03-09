@@ -57,11 +57,11 @@ function Dashboard() {
   }
 
   const sumCurrentInvestment = (items) => {
-    console.log('items', items)
+    // console.log('items', items)
     return items.reduce( function(a, b){
-        console.log(a)
+        // console.log(a)
         const currentCoin = coins.filter(coin => coin.id === b.name)[0]
-        console.log('current coin',currentCoin)
+        // console.log('current coin',currentCoin)
         if(!currentCoin) return a
         if(!currentCoin.price_change_percentage_24h) return a
         const currentCOinPercentGrowth = currentCoin.price_change_percentage_24h
@@ -78,7 +78,7 @@ function Dashboard() {
     if(!initialInvestment) return 0
     const currentCoin = coins.filter(coin => coin.id === name)[0]
     if(!currentCoin || !currentCoin.price_change_percentage_24h) return initialInvestment
-    console.log(currentCoin)
+    // console.log(currentCoin)
     return (1 + currentCoin.price_change_percentage_24h /100) * initialInvestment
   }
 
@@ -98,10 +98,10 @@ function Dashboard() {
       {loadingFirebase && <span>Data: Loading</span>}
       {values && (
         <div>
-          {values.map((value) => {
+          {values.map((value, i) => {
               if(value.name) {
                   return (
-                    <span>
+                    <span key={i}>
                     <MediaQuery maxWidth={500}>
                       <div style={{ backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center', marginBottom: '1em', padding: '1em', lineHeight: '2em' }}>
                         <div>
@@ -116,7 +116,7 @@ function Dashboard() {
                           </div>
                           {value?.volume && <div><b>Volume:</b> <span className="blue">{value?.volume.toLocaleString()}</span></div>}
                           {value?.volume && <div><b>Initial Investment:</b> <span className="blue">{value?.investment}</span></div>}
-                          {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment,value?.name ).toFixed(2)}</span></div>}
+                          {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment, value?.name )}</span></div>}
                           <div>
                             <InvestmentInput value={value} />
                           </div>
@@ -138,8 +138,8 @@ function Dashboard() {
                           {value?.volume && <div><b>Volume:</b> <span className="blue">{value?.volume.toLocaleString()}</span></div>}
                           {value?.volume && <div><b>Initial Investment:</b> <span className="blue">{value?.investment}</span></div>}
                           {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment,value?.name ).toFixed(2)}</span></div>}
-                          <div>
-                            <InvestmentInput value={value} />
+                          <div key={value.id}>
+                            <InvestmentInput key={value.id} value={value} />
                           </div>
                         </div>
                       </div> 

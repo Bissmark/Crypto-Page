@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { updateFirestoreCollectionEntry, deleteFirestoreCollectionEntry } from "./firestore";
 import Button from '@mui/material/Button';
 import { TextField } from "@mui/material";
-import { createTheme } from "@mui/material";
 
 export const InvestmentInput = ({value}) => {
     const [investmentAmount, setInvestmentAmount] = useState(0)
@@ -22,7 +21,7 @@ export const InvestmentInput = ({value}) => {
           <TextField
             sx={{
               "& .MuiInputBase-root": {borderColor: 'white'},
-              input: {color: 'white'}, display: 'block', margin: 'auto', borderColor: 'white'}} 
+              input: {color: 'white'}, display: 'block', margin: 'auto', textAlign: 'center', borderColor: 'white'}} 
             type="number" 
             value={investmentAmount} 
             onChange={(e) => setInvestmentAmount(e.target.value) }

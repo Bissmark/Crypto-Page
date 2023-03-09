@@ -17,8 +17,6 @@ import { LineChart, Line, Tooltip, YAxis } from 'recharts';
 import {addFirestoreCollectionEntry, getFirestoreCollectionEntry } from "./firestore"
 import MediaQuery from 'react-responsive';
 import { TableContainer, TextField } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -86,8 +84,7 @@ function EnhancedTableHead(props) {
   };
 
   return (
-    // <MediaQuery minWidth={600}>
-      <TableHead>
+      <TableHead className='table-header' sx={{backgroundColor: '#36393F'}}>
       <TableRow>
         <TableCell padding="checkbox">
            <Checkbox 
@@ -106,13 +103,13 @@ function EnhancedTableHead(props) {
         </TableCell>
         {headers.map((header) => (
           <TableCell
-            sx={{color: 'white'}}
             key={ header.id }
             align={'center'}
-            // padding={header.disablePadding ? 'none' : 'normal'}
+            padding={header.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === header.id ? order : false}
           >
             <TableSortLabel
+              className='table-header-cell'
               active={orderBy === header.id}
               direction={orderBy === header.id ? order : 'asc'}
               onClick={createSortHandler(header.id)}
@@ -167,7 +164,7 @@ function EnhancedTable() {
     setSelected([]);
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setSearch(e.target.value);
   }
 
@@ -228,13 +225,10 @@ function EnhancedTable() {
     if(price < 0.001) return price.toLocaleString(undefined, { 'minimumFractionDigits': 6,'maximumFractionDigits': 6 })
   }
 
-  const theme = useTheme();
-  const tableWidth = useMediaQuery('(min-width:600px)');
-  
-
   return (
     <div>
-      <div className="coin-search">
+      {/* <SearchBar search={search} /> */}
+      {/* <div className="coin-search">
         <h1 className="coin-text"></h1>
           <TextField
             className="coin-input"
@@ -243,7 +237,7 @@ function EnhancedTable() {
             placeholder='Search...'
             sx={{ input: {color: 'white'}}}
           />
-      </div>
+      </div> */}
       <MediaQuery minWidth={600}>
       <TableContainer>
         <Table>
@@ -294,10 +288,10 @@ function EnhancedTable() {
                     </TableCell>
                     <TableCell align="center" sx={{ color: 'white;', fontFamily: 'Montserrat'}}>{coin.market_cap_rank}</TableCell>
                     <MediaQuery minWidth={600}>
-                      <TableCell 
+                      <TableCell
                         sx={{ color: 'white', fontFamily: 'Montserrat'}}
                       >
-                      <Link to={coin.id}>
+                      <Link className='coin-name' to={coin.id}>
                         <img className='image-table' src={coin.image} />
                         {coin.name}
                       </Link>
@@ -412,6 +406,7 @@ function EnhancedTable() {
         </TableContainer>
         </MediaQuery>
         <TablePagination
+          className='table-pagination'
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={coins.length}
@@ -419,6 +414,7 @@ function EnhancedTable() {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          sx={{ backgroundColor: '#36393F', color: 'white', fontFamily: 'Montserrat', marginBottom: '1em' }}
         />
     </div>
   );

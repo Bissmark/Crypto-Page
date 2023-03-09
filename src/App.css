@@ -6,7 +6,6 @@ body {
   padding: 0;
   font-family: 'Montserrat', sans-serif;
   background-color: #1a1a1c;
-  color: #e4e4e4;
 }
 
 .coin-app {
@@ -15,32 +14,15 @@ body {
   align-items: center;
 }
 
-.coin-search {
-  margin-bottom: 64px;
-  display: grid;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-}
-
-.coin-text {
-  margin-bottom: 32px;
-  text-align: center;
-}
-
 .coin-input {
-  /* padding-left: 16px; */
   width: 300px;
   border-radius: 4px;
-  border: none;
   background-image: linear-gradient(
     -225deg,
-    #ac32e4 0%,
-    #7918f2 48%,
-    #4801ff 100%
+    #1c1c1c 20%,
+    #1976d2 48%,
+    #e2e2e2 90%
   );
-
-  color: #e2e2e2;
 }
 
 .coin-input::placeholder {
@@ -71,9 +53,9 @@ table, th, td {
   color: red;
 }
 
-nav {
+/* nav {
   display: flex;
-}
+} */
 
 .white-content {
   background: #e4e4e4;
@@ -84,7 +66,11 @@ a {
 }
 
 a:hover {
-  color: #00f;
+  color: white;
+}
+
+button:hover {
+  color: white;
 }
 
 .link {
@@ -165,7 +151,13 @@ p {
   border: 1px solid #1a1a1c;
 }
 
-.white-content a {
+/* Change this */
+
+.white-content .coin-name {
+  color: #1a1a1c;
+}
+
+.white-content .blue {
   color: #1a1a1c;
 }
 
@@ -175,6 +167,22 @@ p {
 
 .white-content .home-button {
   color: #1976d2;
+}
+
+.white-content .table-pagination {
+  background-color: #e4e4e4;
+  color: #1a1a1c;
+  border-color: #1a1a1c;
+  border-style: none solid solid solid;
+  border-width: 1px;
+}
+
+.white-content .table-header {
+  background-color: #e4e4e4;
+}
+
+.white-content .table-header-cell {
+  color: #1a1a1c;
 }
 
 .CoinPageTable {
@@ -214,7 +222,7 @@ p {
 }
 
 .title-coin {
-  text-align: center;
+  margin-top: 1em;
 }
 
 .text-box {
@@ -243,18 +251,8 @@ p {
   background-color: #e4e4e4 !important;
 }
 
-.white-content .left-area p {
-  color: black;
-}
-
 .MuiTablePagination-root {
   background-color: #e2e2e2;
-}
-
-@media (min-width: 768px) {
-  .graph-table {
-    display:none;
-  }
 }
 
 .MuiOutlinedInput-notchedOutline {
@@ -262,5 +260,10 @@ p {
 }
 
 .total-coin-info {
+  color: #1976d2;
   margin-right: 1em;
+}
+
+.coin-navbar {
+  color: #e2e2e2;
 }
