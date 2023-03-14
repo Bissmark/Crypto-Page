@@ -2,8 +2,6 @@
 
 body {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
   font-family: 'Montserrat', sans-serif;
   background-color: #1a1a1c;
 }
@@ -266,4 +264,14 @@ p {
 
 .coin-navbar {
   color: #e2e2e2;
+}
+
+.investment-box {
+  margin: 0 auto;
+  margin-bottom: 2em;
+  padding: 0.5em;
+  background-color: #36393F;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 20em;
 }

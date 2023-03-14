@@ -98,9 +98,38 @@ function Dashboard() {
       {loadingFirebase && <span>Data: Loading</span>}
       {values && (
         <div>
+        <div className="investment-box">
+        <div>
+          Total Initial Investment: 
+          <span style={{marginLeft: '0.5em'}} className="blue">
+            ${sumInvestment(values)}
+          </span>
+          </div>
+        <div>
+          Total Current Investment: 
+          <span style={{marginLeft: '0.5em'}} className="blue">
+            ${sumCurrentInvestment(values).toFixed(2)}
+          </span>
+        </div>
+        <div>
+          Total Gain/Loss: 
+          <span style={{marginLeft: '0.5em'}} className={(sumCurrentInvestment(values) - sumInvestment(values)).toFixed(2) > 0 ? "text-success" : "text-danger"}>
+            ${(sumCurrentInvestment(values) - sumInvestment(values)).toFixed(2)}
+          </span>
+        </div> 
+        <div>
+          Percentage Gain/Loss: 
+          <span style={{marginLeft: '0.5em'}} className={((sumCurrentInvestment(values) - sumInvestment(values)) / sumInvestment(values) * 100).toFixed(2) > 0 ? "text-success" : "text-danger"}>
+            { isNaN(((sumCurrentInvestment(values) - sumInvestment(values)) / sumInvestment(values) * 100).toFixed(2)) ? 0 : ((sumCurrentInvestment(values) - sumInvestment(values)) / sumInvestment(values) * 100).toFixed(2)}%
+          </span>
+        </div>
+      </div>
+        <div style={{ maxWidth: '960px', margin: '0 auto'}}>
           {values.map((value, i) => {
+            
               if(value.name) {
                   return (
+                    
                     <span key={i}>
                     <MediaQuery maxWidth={500}>
                       <div style={{ backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center', marginBottom: '1em', padding: '1em', lineHeight: '2em' }}>
@@ -124,7 +153,7 @@ function Dashboard() {
                       </div>   
                     </MediaQuery>
                     <MediaQuery minWidth={600}>
-                      <div style={{ backgroundColor: '#36393F', borderRadius: '15px', marginBottom: '1em', padding: '1em', lineHeight: '2em', maxWidth: '15em', display: 'inline-flex', marginRight: '2em' }}>
+                      <div style={{ backgroundColor: '#36393F', borderRadius: '15px', marginBottom: '1em', padding: '1em', lineHeight: '2em', maxWidth: '17em', width: '17em', display: 'inline-flex', marginRight: '1em' }}>
                         <div>
                           {value?.name && <div><b>Name:</b> <span className="blue">{value?.name.charAt(0).toUpperCase() + value?.name.slice(1)}</span></div>}
                           {value?.marketCap && <div><b>MarketCap:</b> <span className="blue">{value?.marketCap.toLocaleString()}</span></div>}
@@ -148,32 +177,7 @@ function Dashboard() {
                   );
                 }
             })}
-            <div style={{ padding: '0.5em', backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center' }}>
-              <div>
-                Total Initial Investment: 
-                <span style={{marginLeft: '0.5em'}} className="blue">
-                  ${sumInvestment(values)}
-                </span>
-                </div>
-              <div>
-                Total Current Investment: 
-                <span style={{marginLeft: '0.5em'}} className="blue">
-                  ${sumCurrentInvestment(values).toFixed(2)}
-                </span>
-              </div>
-              <div>
-                Total Gain/Loss: 
-                <span style={{marginLeft: '0.5em'}} className={(sumCurrentInvestment(values) - sumInvestment(values)).toFixed(2) > 0 ? "text-success" : "text-danger"}>
-                  ${(sumCurrentInvestment(values) - sumInvestment(values)).toFixed(2)}
-                </span>
-              </div> 
-              <div>
-                Percentage Gain/Loss: 
-                <span style={{marginLeft: '0.5em'}} className={((sumCurrentInvestment(values) - sumInvestment(values)) / sumInvestment(values) * 100).toFixed(2) > 0 ? "text-success" : "text-danger"}>
-                  {((sumCurrentInvestment(values) - sumInvestment(values)) / sumInvestment(values) * 100).toFixed(2)}%
-                </span>
-              </div>
-            </div>
+        </div>
         </div>
       )}
     </div>
