@@ -7,7 +7,7 @@ import { query, collection, getDocs, where } from "firebase/firestore";
 import { getFirestoreCollectionEntry, deleteFirestoreCollectionEntry, updateFirestoreCollectionEntry } from "../firestore";
 import axios from 'axios';
 import { InvestmentInput } from "../investmentInput";
-import MediaQuery from 'react-responsive';
+import { useMediaQuery } from "react-responsive";
 
 function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
@@ -16,6 +16,7 @@ function Dashboard() {
   const [investmentAmount, setInvestmentAmount] = useState(0)
   const navigate = useNavigate();
   const [values, loadingFirebase, errorFB, snaphot] = getFirestoreCollectionEntry("favourites");
+  const isBigScreen = useMediaQuery({ query: '(min-width: 600px)'});
   
   const fetchUserName = async () => {
     try {
@@ -89,71 +90,47 @@ function Dashboard() {
   }, [user, loading]);
 
   return (
-    <div className="dashboard" style={{flexWrap: 'wrap'}}>
+    <div className="dashboard">
       <div className="dashboard_container">
-        <h1 className="profile-name">{ name }</h1>
-        <div style={{ textAlign: 'center' }}>Email: <span style={{ color: 'white'}}>{ user?.email }</span></div>
+        <h1>{ name }</h1>
+        <div>Email: <p>{ user?.email }</p></div>
       </div>
       <h1>Portfolio</h1>
       {loadingFirebase && <span>Data: Loading</span>}
       {values && (
         <div>
         <div className="investment-box">
-        <div>
+          <div>
           Total Initial Investment: 
-          <span style={{marginLeft: '0.5em'}} className="blue">
+          <span className="blue">
             ${sumInvestment(values)}
           </span>
           </div>
-        <div>
-          Total Current Investment: 
-          <span style={{marginLeft: '0.5em'}} className="blue">
-            ${sumCurrentInvestment(values).toFixed(2)}
-          </span>
+          <div>
+            Total Current Investment: 
+            <span className="blue">
+              ${sumCurrentInvestment(values).toFixed(2)}
+            </span>
+          </div>
+          <div>
+            Total Gain/Loss: 
+            <span className={(sumCurrentInvestment(values) - sumInvestment(values)).toFixed(2) > 0 ? "text-success" : "text-danger"}>
+              ${(sumCurrentInvestment(values) - sumInvestment(values)).toFixed(2)}
+            </span>
+          </div> 
+          <div>
+            Percentage Gain/Loss: 
+            <span className={((sumCurrentInvestment(values) - sumInvestment(values)) / sumInvestment(values) * 100).toFixed(2) > 0 ? "text-success" : "text-danger"}>
+              { isNaN(((sumCurrentInvestment(values) - sumInvestment(values)) / sumInvestment(values) * 100).toFixed(2)) ? 0 : ((sumCurrentInvestment(values) - sumInvestment(values)) / sumInvestment(values) * 100).toFixed(2)}%
+            </span>
+          </div>
         </div>
-        <div>
-          Total Gain/Loss: 
-          <span style={{marginLeft: '0.5em'}} className={(sumCurrentInvestment(values) - sumInvestment(values)).toFixed(2) > 0 ? "text-success" : "text-danger"}>
-            ${(sumCurrentInvestment(values) - sumInvestment(values)).toFixed(2)}
-          </span>
-        </div> 
-        <div>
-          Percentage Gain/Loss: 
-          <span style={{marginLeft: '0.5em'}} className={((sumCurrentInvestment(values) - sumInvestment(values)) / sumInvestment(values) * 100).toFixed(2) > 0 ? "text-success" : "text-danger"}>
-            { isNaN(((sumCurrentInvestment(values) - sumInvestment(values)) / sumInvestment(values) * 100).toFixed(2)) ? 0 : ((sumCurrentInvestment(values) - sumInvestment(values)) / sumInvestment(values) * 100).toFixed(2)}%
-          </span>
-        </div>
-      </div>
-        <div style={{ maxWidth: '960px', margin: '0 auto'}}>
+        <div className="dashboard-boxes">
           {values.map((value, i) => {
-            
               if(value.name) {
                   return (
-                    
                     <span key={i}>
-                    <MediaQuery maxWidth={500}>
-                      <div style={{ backgroundColor: '#36393F', borderRadius: '15px', textAlign: 'center', marginBottom: '1em', padding: '1em', lineHeight: '2em' }}>
-                        <div>
-                          {value?.name && <div><b>Name:</b> <span className="blue">{value?.name.charAt(0).toUpperCase() + value?.name.slice(1)}</span></div>}
-                          {value?.marketCap && <div><b>MarketCap:</b> <span className="blue">{value?.marketCap.toLocaleString()}</span></div>}
-                          {value?.price && <div><b>Price:</b> <span className="blue">${value?.price}</span></div>}
-                          <div className="twenty-four-change">
-                            <p><b>24hr change:</b></p>
-                            <p className={value?.twentyFourHour > 0 ? "text-success" : "text-danger"}>
-                            { value?.twentyFourHour.toFixed(2) }%
-                            </p>
-                          </div>
-                          {value?.volume && <div><b>Volume:</b> <span className="blue">{value?.volume.toLocaleString()}</span></div>}
-                          {value?.volume && <div><b>Initial Investment:</b> <span className="blue">{value?.investment}</span></div>}
-                          {value?.volume && <div><b>Current Investment:</b> <span className="blue">{currentInvestmentValue(value?.investment, value?.name )}</span></div>}
-                          <div>
-                            <InvestmentInput value={value} />
-                          </div>
-                        </div>
-                      </div>   
-                    </MediaQuery>
-                    <MediaQuery minWidth={600}>
-                      <div style={{ backgroundColor: '#36393F', borderRadius: '15px', marginBottom: '1em', padding: '1em', lineHeight: '2em', maxWidth: '17em', width: '17em', display: 'inline-flex', marginRight: '1em' }}>
+                      <div className = { !isBigScreen ? "mobile-dashboard" : "desktop-dashboard"}>
                         <div>
                           {value?.name && <div><b>Name:</b> <span className="blue">{value?.name.charAt(0).toUpperCase() + value?.name.slice(1)}</span></div>}
                           {value?.marketCap && <div><b>MarketCap:</b> <span className="blue">{value?.marketCap.toLocaleString()}</span></div>}
@@ -171,9 +148,8 @@ function Dashboard() {
                             <InvestmentInput key={value.id} value={value} />
                           </div>
                         </div>
-                      </div> 
-                    </MediaQuery>
-                     </span>
+                      </div>
+                    </span>
                   );
                 }
             })}

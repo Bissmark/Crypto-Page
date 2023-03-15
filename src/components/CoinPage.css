@@ -1,0 +1,16 @@
+.next-to {
+    display: inline-block;
+    width: 50%;
+}
+
+.next-to-mobile {
+    padding: 0 0 0 2em;
+}
+
+.graph-mobile {
+    margin-top: 3em;
+}
+
+.y-axis-font {
+    font-size: 10px;
+}

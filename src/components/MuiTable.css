@@ -1,0 +1,26 @@
+.table-cell {
+    color: white !important;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.coin-app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+.white-content .table-cell {
+    color: black !important;
+}
+
+.mobile-table-container {
+    max-width: 361px;
+}
+
+.mobile-table {
+    margin-left: 1.3em;
+}
+
+.desktop-table {
+    color: white;
+}

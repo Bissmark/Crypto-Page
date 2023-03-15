@@ -15,8 +15,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { LineChart, Line, Tooltip, YAxis } from 'recharts';
 import {addFirestoreCollectionEntry, getFirestoreCollectionEntry } from "./firestore"
-import MediaQuery from 'react-responsive';
-import { TableContainer, TextField } from '@mui/material';
+import { TableContainer } from '@mui/material';
+import { useMediaQuery } from 'react-responsive';
+import "./MuiTable.css"
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -84,10 +85,10 @@ function EnhancedTableHead(props) {
   };
 
   return (
-      <TableHead className='table-header' sx={{backgroundColor: '#36393F'}}>
+    <TableHead className='table-header' sx={{backgroundColor: '#36393F'}}>
       <TableRow>
         <TableCell padding="checkbox">
-           <Checkbox 
+            <Checkbox 
             sx={{
               color: '#f1bb09 !important',
               '&.Mui-checked': 
@@ -125,7 +126,7 @@ function EnhancedTableHead(props) {
           </TableCell>
         ))}
       </TableRow>
-      </TableHead>
+    </TableHead>
   );
 }
 
@@ -137,6 +138,7 @@ function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [coins, setCoins] = useState([]);
   const [search, setSearch] = useState('');
+  const isBigScreen = useMediaQuery({ query: '(min-width: 600px)'});
 
   const [values, loadingFirebase, errorFB, snaphot] = getFirestoreCollectionEntry("favourites");
 
@@ -238,9 +240,8 @@ function EnhancedTable() {
             sx={{ input: {color: 'white'}}}
           />
       </div> */}
-      <MediaQuery minWidth={600}>
-      <TableContainer>
-        <Table>
+      <TableContainer className = { isBigScreen ? "" : "mobile-table-container"}>
+        <Table className = { isBigScreen ? "desktop-table" : "mobile-table"}>
           <EnhancedTableHead
             numSelected={selected.length}
             order={order}
@@ -286,28 +287,16 @@ function EnhancedTable() {
                       >
                     </Checkbox>
                     </TableCell>
-                    <TableCell align="center" sx={{ color: 'white;', fontFamily: 'Montserrat'}}>{coin.market_cap_rank}</TableCell>
-                    <MediaQuery minWidth={600}>
-                      <TableCell
-                        sx={{ color: 'white', fontFamily: 'Montserrat'}}
-                      >
-                      <Link className='coin-name' to={coin.id}>
-                        <img className='image-table' src={coin.image} />
-                        {coin.name}
-                      </Link>
-                      </TableCell>  
-                    </MediaQuery>
-                    <MediaQuery maxWidth={500}>
-                    <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat'}}><Link to={coin.id}><img className='image-table' src={coin.image} /></Link></TableCell>  
-                    </MediaQuery>
-                    <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat'}}>${ priceFormatter(coin.current_price) }</TableCell>
+                    <TableCell align="center" className='table-cell'>{coin.market_cap_rank}</TableCell>
+                      <TableCell align = { isBigScreen ? "" : "center"} className='table-cell'> <Link className='table-cell' to={coin.id}><img className='image-table' src={coin.image} />{coin.name}</Link></TableCell>
+                    <TableCell align="center" className='table-cell'>${ priceFormatter(coin.current_price) }</TableCell>
                     <TableCell
                       align="center"
-                      sx={ coin.price_change_percentage_24h > 0 ? {color: 'green !important'} : {color: 'red !important', width: '1%'}}>
+                      sx={ coin.price_change_percentage_24h > 0 ? {color: 'green !important'} : {color: 'red !important'}}>
                       { coin.price_change_percentage_24h.toFixed(2) }%
                     </TableCell>
-                      <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.total_volume.toLocaleString() }</TableCell>
-                      <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.market_cap.toLocaleString() }</TableCell>
+                      <TableCell align="center" className='table-cell'>${ coin.total_volume.toLocaleString() }</TableCell>
+                      <TableCell align="center" className='table-cell'>${ coin.market_cap.toLocaleString() }</TableCell>
                       <TableCell key={coin.name}>
                         <LineChart width={300} height={100} data={coinPricingData}>
                         <Line type="natural" dataKey="price" stroke={priceIncrease ? "#82ca9d" : "red"} dot={false} />
@@ -321,90 +310,6 @@ function EnhancedTable() {
           </TableBody>
         </Table>
         </TableContainer>
-        </MediaQuery>
-        <MediaQuery maxWidth={500}>
-        <TableContainer  sx={{ maxWidth: 361 }}> {/* Need to look into media query for a style*/}
-        <Table sx={{ marginLeft: '1.3em' }}>
-          <EnhancedTableHead
-            numSelected={selected.length}
-            order={order}
-            orderBy={orderBy}
-            onSelectAllClick={handleSelectAllClick}
-            onRequestSort={handleRequestSort}
-            rowCount={coins.length}
-          />
-          <TableBody>
-            {stableSort(coins, getComparator(order, orderBy))
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .filter((coin => coin.name.toLowerCase().includes(search.toLowerCase())))
-              .map((coin) => {
-                const isItemSelected = isSelected(coin.id);
-                const min = coin.sparkline_in_7d.price[0];
-                const max = coin.sparkline_in_7d.price[coin.sparkline_in_7d.price.length - 1];
-                const priceIncrease = max > min ? true : false;
-                const coinPricingData = coin.sparkline_in_7d.price.map(value => {
-                  return {"price": value.toFixed(5)}
-                })
-                return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, coin.id)}
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={coin.id}
-                    selected={isItemSelected}
-                  >
-                    <TableCell padding="checkbox">
-                    <Checkbox 
-                      sx={{
-                        color: '#f1bb09',
-                        '&.Mui-checked': 
-                        {
-                          color: '#1976d2',
-                        },
-                      }}
-                      onClick={(e) => pushToFirebaseDB(e, coin)}
-                      icon={<StarBorderIcon />} 
-                      checkedIcon={<StarIcon />}
-                      checked={valuesAddedToDB(coin)}
-                      >
-                    </Checkbox>
-                    </TableCell>
-                    <TableCell align="center" sx={{ color: 'white;', fontFamily: 'Montserrat'}}>{coin.market_cap_rank}</TableCell>
-                    <MediaQuery minWidth={600}>
-                      <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat'}}><Link to={coin.id}><img className='image-table' src={coin.image} />{coin.name}</Link></TableCell>  
-                    </MediaQuery>
-                    <MediaQuery maxWidth={500}>
-                    <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat'}}><Link to={coin.id}><img className='image-table' src={coin.image} /></Link></TableCell>  
-                    </MediaQuery>
-                    <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat'}}>${ priceFormatter(coin.current_price) }</TableCell>
-                    <TableCell
-                      align="center"
-                      sx={ coin.price_change_percentage_24h > 0 ? {color: 'green !important'} : {color: 'red !important', width: '1%'}}>
-                      { coin.price_change_percentage_24h.toFixed(2) }%
-                    </TableCell>
-                    {/* <MediaQuery maxWidth={500}>
-                      <TableCell align="center" sx={{ display: { xs: 'none'}, color: 'white', fontFamily: 'Montserrat' }}>${ coin.total_volume.toLocaleString() }</TableCell>
-                      <TableCell align="center" sx={{ display: { xs: 'none'}, color: 'white', fontFamily: 'Montserrat' }}>${ coin.market_cap.toLocaleString() }</TableCell>  
-                    </MediaQuery> */}
-                    {/* <MediaQuery minWidth={600}> */}
-                      <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.total_volume.toLocaleString() }</TableCell>
-                      <TableCell align="center" sx={{ color: 'white', fontFamily: 'Montserrat' }}>${ coin.market_cap.toLocaleString() }</TableCell>
-                      <TableCell key={coin.name}>
-                        <LineChart width={300} height={100} data={coinPricingData}>
-                        <Line type="natural" dataKey="price" stroke={priceIncrease ? "#82ca9d" : "red"} dot={false} />
-                        <Tooltip content={ Toolip } cursor={ false } wrapperStyle={{ outline: 'none' }} />
-                        <YAxis hide={true} domain={['dataMin', 'dataMax']} />
-                        </LineChart> 
-                      </TableCell>
-                    {/* </MediaQuery> */}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-        </TableContainer>
-        </MediaQuery>
         <TablePagination
           className='table-pagination'
           rowsPerPageOptions={[5, 10, 25]}

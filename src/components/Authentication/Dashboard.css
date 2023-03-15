@@ -6,8 +6,22 @@ h1 {
     text-align: center;
 }
 
-.profile-name {
+.dashboard_container {
     text-align: center;
+}
+
+.dashboard {
+    flex-wrap: wrap;
+}
+
+.dashboard-boxes {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.dashboard_container p {
+    color: white;
+    display: inline;
 }
 
 .favourites {
@@ -32,6 +46,45 @@ h1 {
     text-align: 'center';
 }
 
+.investment-box {
+    margin: 0 auto;
+    margin-bottom: 2em;
+    padding: 0.5em;
+    background-color: #36393F;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 20em;
+}
+
+.investment-box span {
+    margin-left: 0.5em;
+}
+
+@media (min-width: 600px) {
+    .desktop-dashboard {
+        background-color: #36393F;
+        border-radius: 15px;
+        text-align: center;
+        margin-bottom: 1em;
+        padding: 1em;
+        line-height: 2em;
+        max-width: 17em;
+        width: 17em;
+        display: inline-flex;
+        margin-right: 1em; 
+    }
+}
+
+@media (max-width: 550px) {
+    .mobile-dashboard {
+        background-color: #36393F;
+        border-radius: 15px;
+        text-align: center;
+        margin-bottom: 1em;
+        padding: 1em;
+        line-height: 2em;
+    }
+}
 /* @media (min-width: 500px) { */
     .dashboard {
         margin: 2em;

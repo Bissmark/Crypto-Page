@@ -23,13 +23,13 @@ const TotalCoinInfo = () => {
     }
 
     return (
-        <nav>
-          <ul className="left-area" style={{ fontSize: '12px', display: 'flex'}}>
-              <p className="total-coin-info">Amount of Coins: <span className="coin-navbar">{coin.data.active_cryptocurrencies}</span> </p>
-              <p className="total-coin-info">Total Market Cap: <span className="coin-navbar">{coin.data.total_market_cap.usd.toLocaleString(undefined, { 'minimumFractionDigits': 2,'maximumFractionDigits': 2 })}</span></p>
-              <p className="total-coin-info">Total 24hr Volume: <span className="coin-navbar">{coin.data.total_volume.usd.toLocaleString(undefined, { 'minimumFractionDigits': 2,'maximumFractionDigits': 2 })}</span></p>
-          </ul>    
-        </nav>
+      <nav>
+        <ul className="total-coin-info-container">
+            <p className="total-coin-info">Amount of Coins: <span className="coin-navbar">{coin.data.active_cryptocurrencies}</span> </p>
+            <p className="total-coin-info">Total Market Cap: <span className="coin-navbar">{coin.data.total_market_cap.usd.toLocaleString(undefined, { 'minimumFractionDigits': 2,'maximumFractionDigits': 2 })}</span></p>
+            <p className="total-coin-info">Total 24hr Volume: <span className="coin-navbar">{coin.data.total_volume.usd.toLocaleString(undefined, { 'minimumFractionDigits': 2,'maximumFractionDigits': 2 })}</span></p>
+        </ul>    
+      </nav>
     )
 }
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { TextField } from "@mui/material";
+import './SearchBar.css'
 
 const SearchBar = ({ search, setSearch, coins }) => {
     //const [search, setSearch] = useState('');
