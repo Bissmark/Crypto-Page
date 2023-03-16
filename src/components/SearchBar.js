@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { TextField } from "@mui/material";
 import './SearchBar.css'
 
-const SearchBar = ({ search, setSearch, coins }) => {
-    //const [search, setSearch] = useState('');
+const SearchBar = ({ setSearchQuery }) => {
+    //const [search, setSearch] = useContext('');
 
     const handleChange = (e) => {
         e.preventDefault();
-        setSearch(e.target.value);
+        setSearchQuery(e.target.value);
     }
 
     return (

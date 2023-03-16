@@ -16,24 +16,25 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import SearchBar from '../SearchBar';
+import TextField from '@mui/material/TextField';
 
-const SearchAppBar = () => {
-    const [darkMode, setDarkMode] = useState(true);
-    const [name, setName] = useState("");
-    const [anchorEl, setAnchorEl] = useState(null);
+const Navbar = ({ setSearchQuery }) => {
+  const [darkMode, setDarkMode] = useState(true);
+  const [name, setName] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
 
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+      setAnchorEl(null);
+  };
 
-    const handleCloseLogOut = () => {
-        logout();
-        setAnchorEl(null);
-    }
+  const handleCloseLogOut = () => {
+      logout();
+      setAnchorEl(null);
+  }
 
   return (
     <Box sx={{ flexGrow: 1, marginBottom: '7em' }}>
@@ -41,7 +42,7 @@ const SearchAppBar = () => {
       <AppBar position="fixed">
         <Toolbar sx={{ backgroundColor: '#36393F', flexGrow: '1'}}>
           <TotalCoinInfo />
-          <SearchBar />
+          <SearchBar setSearchQuery={setSearchQuery} />
           <Typography style={{ flex: 1 }}></Typography>
             <Button to="/" component={RouterLink}><HomeSharpIcon /></Button>
             <ThemeContext.Consumer>
@@ -82,4 +83,4 @@ const SearchAppBar = () => {
   );
 }
 
-export default SearchAppBar;
+export default Navbar;

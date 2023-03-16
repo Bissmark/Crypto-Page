@@ -15,7 +15,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { LineChart, Line, Tooltip, YAxis } from 'recharts';
 import {addFirestoreCollectionEntry, getFirestoreCollectionEntry } from "./firestore"
-import { TableContainer } from '@mui/material';
+import { TableContainer, TextField } from '@mui/material';
 import { useMediaQuery } from 'react-responsive';
 import "./MuiTable.css"
 
@@ -130,14 +130,13 @@ function EnhancedTableHead(props) {
   );
 }
 
-function EnhancedTable() {
+function EnhancedTable({ searchQuery }) {
   const [order, setOrder] = useState('');
   const [orderBy, setOrderBy] = useState('');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [coins, setCoins] = useState([]);
-  const [search, setSearch] = useState('');
   const isBigScreen = useMediaQuery({ query: '(min-width: 600px)'});
 
   const [values, loadingFirebase, errorFB, snaphot] = getFirestoreCollectionEntry("favourites");
@@ -165,10 +164,6 @@ function EnhancedTable() {
     }
     setSelected([]);
   };
-
-  const handleChange = (e) => {
-    setSearch(e.target.value);
-  }
 
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
@@ -229,17 +224,6 @@ function EnhancedTable() {
 
   return (
     <div>
-      {/* <SearchBar search={search} /> */}
-      {/* <div className="coin-search">
-        <h1 className="coin-text"></h1>
-          <TextField
-            className="coin-input"
-            type='text'
-            onChange={ handleChange }
-            placeholder='Search...'
-            sx={{ input: {color: 'white'}}}
-          />
-      </div> */}
       <TableContainer className = { isBigScreen ? "" : "mobile-table-container"}>
         <Table className = { isBigScreen ? "desktop-table" : "mobile-table"}>
           <EnhancedTableHead
@@ -253,7 +237,7 @@ function EnhancedTable() {
           <TableBody>
             {stableSort(coins, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .filter((coin => coin.name.toLowerCase().includes(search.toLowerCase())))
+              .filter((coin => coin.name.toLowerCase().includes(searchQuery.toLowerCase())))
               .map((coin) => {
                 const isItemSelected = isSelected(coin.id);
                 const min = coin.sparkline_in_7d.price[0];

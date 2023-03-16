@@ -19,7 +19,7 @@ const CoinPage = () => {
             setLoading(false);
           })
           .catch(error => console.log(error));
-    }, []);
+    }, [params.coinName]);
 
     if (isLoading) {
         return <div className="App">Loading...</div>;
@@ -35,7 +35,7 @@ const CoinPage = () => {
 
     const Toolip = props =>  
         (! props.active) ? null :  ( 
-        <div style={{ fontFamily: 'Montserrat',  color : 'white',  fontSize: '15px', fontFamily: 'Montserrat', fontWeight: 'bold' }} >
+        <div style={{ fontFamily: 'Montserrat',  color : 'white',  fontSize: '15px', fontWeight: 'bold' }} >
         {props.payload.map((v, i) => <p key={i}>{v.value}</p>)}
         </div> 
     )

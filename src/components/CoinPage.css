@@ -14,3 +14,11 @@
 .y-axis-font {
     font-size: 10px;
 }
+
+.recharts-tooltip-wrapper p {
+    color: #e4e4e4;
+}
+
+.white-content .recharts-tooltip-wrapper p {
+    color: #1a1a1c;
+}

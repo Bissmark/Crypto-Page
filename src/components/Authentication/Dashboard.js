@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import { auth, db } from "../../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
-import { getFirestoreCollectionEntry, deleteFirestoreCollectionEntry, updateFirestoreCollectionEntry } from "../firestore";
+import { getFirestoreCollectionEntry } from "../firestore";
 import axios from 'axios';
 import { InvestmentInput } from "../investmentInput";
 import { useMediaQuery } from "react-responsive";
@@ -13,7 +13,7 @@ function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
   const [coins, setCoins] = useState([]);
   const [name, setName] = useState("");
-  const [investmentAmount, setInvestmentAmount] = useState(0)
+  // const [investmentAmount, setInvestmentAmount] = useState(0)
   const navigate = useNavigate();
   const [values, loadingFirebase, errorFB, snaphot] = getFirestoreCollectionEntry("favourites");
   const isBigScreen = useMediaQuery({ query: '(min-width: 600px)'});
@@ -39,9 +39,9 @@ function Dashboard() {
       .catch(error => console.log(error))
   }, []);
 
-  const removeDbEntry = (name) => {
-    deleteFirestoreCollectionEntry('favourites', name)
-  }
+  // const removeDbEntry = (name) => {
+  //   deleteFirestoreCollectionEntry('favourites', name)
+  // }
 
   const sumInvestment = (items) => {
     return items.reduce( function(a, b){
@@ -52,10 +52,10 @@ function Dashboard() {
     }, 0);
   }
 
-  const submitInvestment = (e, name) => {
-    e.preventDefault();
-    updateFirestoreCollectionEntry('favourites', name, 'investment', investmentAmount)
-  }
+  // const submitInvestment = (e, name) => {
+  //   e.preventDefault();
+  //   updateFirestoreCollectionEntry('favourites', name, 'investment', investmentAmount)
+  // }
 
   const sumCurrentInvestment = (items) => {
     // console.log('items', items)

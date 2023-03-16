@@ -1,11 +1,11 @@
 import React from "react";
 import BasicTable from "./MuiTable";
 
-const Home = () => {
+const Home = ({ searchQuery }) => {
     return (
         <div>
             <div className="coin-app">
-                <BasicTable />
+                <BasicTable searchQuery={ searchQuery } />
             </div>
         </div>
     )

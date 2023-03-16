@@ -16,7 +16,7 @@ import GetUserName from "./GetUserName";
 import { LightMode } from '@mui/icons-material';
 import SearchBar from '../SearchBar';
 
-const NavbarMobile = () => {
+const NavbarMobile = ({ setSearchQuery }) => {
     const [darkMode, setDarkMode] = useState(true);
     const [name, setName] = useState("");
     const [anchorEl, setAnchorEl] = useState(null);
@@ -77,7 +77,7 @@ const NavbarMobile = () => {
             { !name && <MenuItem to="/login" component={RouterLink} onClick={handleClose}>Login</MenuItem> }
             { !name && <MenuItem to="/register" component={RouterLink} onClick={handleClose}>Signup</MenuItem> }
             </Menu>
-            <SearchBar />
+            <SearchBar setSearchQuery={setSearchQuery} />
         </Toolbar>
       </AppBar>
     </Box>
