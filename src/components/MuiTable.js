@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,14 +10,21 @@ import TablePagination from '@mui/material/TablePagination';
 import Checkbox from '@mui/material/Checkbox';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import PropTypes from 'prop-types';
 import { visuallyHidden } from '@mui/utils';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { LineChart, Line, Tooltip, YAxis } from 'recharts';
 import {addFirestoreCollectionEntry, getFirestoreCollectionEntry } from "./firestore"
-import { TableContainer, TextField } from '@mui/material';
+import { TableContainer } from '@mui/material';
 import { useMediaQuery } from 'react-responsive';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import { alpha } from '@mui/material/styles';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FilterListIcon from '@mui/icons-material/FilterList';
 import "./MuiTable.css"
 
 function descendingComparator(a, b, orderBy) {
@@ -51,29 +59,36 @@ const headers = [
   {
     id: 'rank',
     numeric: true,
+    label: 'rank'
   }, 
   {
     id: 'name',
     numeric: false,
+    label: 'name'
   }, 
   {
     id: 'price',
     numeric: true,
+    label: 'price'
   }, 
   {
     id: '24hr',
     numeric: true,
+    label: '24hr'
   }, 
   {
     id: 'volume',
     numeric: true,
+    label: 'volume'
   }, 
   { id: 'marketcap',
     numeric: true,
+    label: 'marketcap'
   }, 
   {
-    id: 'Last 7 Days',
+    id: 'last 7 days',
     numeric: true,
+    label: 'last 7 days'
   }
 ];
 
@@ -110,13 +125,12 @@ function EnhancedTableHead(props) {
             sortDirection={orderBy === header.id ? order : false}
           >
             <TableSortLabel
-              className='table-header-cell'
               active={orderBy === header.id}
               direction={orderBy === header.id ? order : 'asc'}
               onClick={createSortHandler(header.id)}
               sx={{color: 'white', "&:hover": { color: '#1976d2'}, "active": { color: '#1976d2'}}}
             >
-              {header.id}
+              {header.label}
               {orderBy === header.id ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
@@ -131,8 +145,8 @@ function EnhancedTableHead(props) {
 }
 
 function EnhancedTable({ searchQuery }) {
-  const [order, setOrder] = useState('');
-  const [orderBy, setOrderBy] = useState('');
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('rank');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -158,7 +172,7 @@ function EnhancedTable({ searchQuery }) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = coins.map((n) => n);
+      const newSelected = coins.map((n) => n.name);
       setSelected(newSelected);
       return;
     }
@@ -198,14 +212,14 @@ function EnhancedTable({ searchQuery }) {
 
   const Toolip = props =>  
   (! props.active) ? null :  ( 
-  <div style={{ fontFamily: 'Montserrat',  color : 'white',  fontSize: '15px', fontFamily: 'Montserrat', fontWeight: 'bold' }} >
+  <div style={{ fontFamily: 'Montserrat',  color : 'white',  fontSize: '15px', fontWeight: 'bold' }} >
   {props.payload.map((v, i) => <p key ={ i }>{v.value}</p>)}
   </div> )
 
   const pushToFirebaseDB = (e,coin) => {
     const {id, current_price, market_cap_rank, total_volume, market_cap, sparkline_in_7d, price_change_percentage_24h} = coin 
     addFirestoreCollectionEntry('favourites', market_cap_rank, id, current_price, total_volume, market_cap, sparkline_in_7d, price_change_percentage_24h )
-    console.log('added')
+    // console.log('added')
   }
 
   const valuesAddedToDB = (coin) => {
@@ -224,76 +238,82 @@ function EnhancedTable({ searchQuery }) {
 
   return (
     <div>
-      <TableContainer className = { isBigScreen ? "" : "mobile-table-container"}>
-        <Table className = { isBigScreen ? "desktop-table" : "mobile-table"}>
-          <EnhancedTableHead
-            numSelected={selected.length}
-            order={order}
-            orderBy={orderBy}
-            onSelectAllClick={handleSelectAllClick}
-            onRequestSort={handleRequestSort}
-            rowCount={coins.length}
-          />
-          <TableBody>
-            {stableSort(coins, getComparator(order, orderBy))
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .filter((coin => coin.name.toLowerCase().includes(searchQuery.toLowerCase())))
-              .map((coin) => {
-                const isItemSelected = isSelected(coin.id);
-                const min = coin.sparkline_in_7d.price[0];
-                const max = coin.sparkline_in_7d.price[coin.sparkline_in_7d.price.length - 1];
-                const priceIncrease = max > min ? true : false;
-                const coinPricingData = coin.sparkline_in_7d.price.map(value => {
-                  return {"price": value.toFixed(5)}
-                })
-                return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, coin.id)}
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={coin.id}
-                    selected={isItemSelected}
-                  >
-                    <TableCell padding="checkbox">
-                    <Checkbox 
-                      sx={{
-                        color: '#f1bb09',
-                        '&.Mui-checked': 
-                        {
-                          color: '#1976d2',
-                        },
-                      }}
-                      onClick={(e) => pushToFirebaseDB(e, coin)}
-                      icon={<StarBorderIcon />} 
-                      checkedIcon={<StarIcon />}
-                      checked={valuesAddedToDB(coin)}
+      <Box sx={{ width: '100%' }}>
+        <Paper sx={{ width: '100%', mb: 2 }}>
+          <TableContainer className = { isBigScreen ? "" : "mobile-table-container"}>
+            <Table className = { isBigScreen ? "desktop-table" : "mobile-table"}>
+              <EnhancedTableHead
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={coins.length}
+              />
+              <TableBody>
+                {stableSort(coins, getComparator(order, orderBy))
+                  .filter((coin => coin.name.toLowerCase().includes(searchQuery.toLowerCase())))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((coin, index) => {
+                    const isItemSelected = isSelected(coin.name);
+                    const labelId = `enhanced-table-checkbox-${index}`;
+                    const min = coin.sparkline_in_7d.price[0];
+                    const max = coin.sparkline_in_7d.price[coin.sparkline_in_7d.price.length - 1];
+                    const priceIncrease = max > min ? true : false;
+                    const coinPricingData = coin.sparkline_in_7d.price.map(value => {
+                      return {"price": value.toFixed(5)}
+                    })
+                    return (
+                      <TableRow
+                        hover
+                        onClick={(event) => handleClick(event, coin.name)}
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={coin.name}
+                        selected={isItemSelected}
                       >
-                    </Checkbox>
-                    </TableCell>
-                    <TableCell align="center" className='table-cell'>{coin.market_cap_rank}</TableCell>
-                      <TableCell align = { isBigScreen ? "" : "center"} className='table-cell'> <Link className='table-cell' to={coin.id}><img className='image-table' src={coin.image} />{coin.name}</Link></TableCell>
-                    <TableCell align="center" className='table-cell'>${ priceFormatter(coin.current_price) }</TableCell>
-                    <TableCell
-                      align="center"
-                      sx={ coin.price_change_percentage_24h > 0 ? {color: 'green !important'} : {color: 'red !important'}}>
-                      { coin.price_change_percentage_24h.toFixed(2) }%
-                    </TableCell>
-                      <TableCell align="center" className='table-cell'>${ coin.total_volume.toLocaleString() }</TableCell>
-                      <TableCell align="center" className='table-cell'>${ coin.market_cap.toLocaleString() }</TableCell>
-                      <TableCell key={coin.name}>
-                        <LineChart width={300} height={100} data={coinPricingData}>
-                        <Line type="natural" dataKey="price" stroke={priceIncrease ? "#82ca9d" : "red"} dot={false} />
-                        <Tooltip content={ Toolip } cursor={ false } wrapperStyle={{ outline: 'none' }} />
-                        <YAxis hide={true} domain={['dataMin', 'dataMax']} />
-                        </LineChart> 
-                      </TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-        </TableContainer>
+                        <TableCell padding="checkbox">
+                        <Checkbox 
+                          sx={{
+                            color: '#f1bb09',
+                            '&.Mui-checked': 
+                            {
+                              color: '#1976d2',
+                            },
+                          }}
+                          onClick={(e) => pushToFirebaseDB(e, coin)}
+                          icon={<StarBorderIcon />} 
+                          checkedIcon={<StarIcon />}
+                          checked={valuesAddedToDB(coin)}
+                          inputProps={{ 'aria-labelledby': labelId }}
+                          >
+                        </Checkbox>
+                        </TableCell>
+                        <TableCell align="center" className='table-cell'>{coin.market_cap_rank}</TableCell>
+                          <TableCell align = { isBigScreen ? "" : "center"} className='table-cell'> <Link className='table-cell' to={coin.id}><img className='image-table' src={coin.image} />{coin.name}</Link></TableCell>
+                        <TableCell align="center" className='table-cell'>${ priceFormatter(coin.current_price) }</TableCell>
+                        <TableCell
+                          align="center"
+                          sx={ coin.price_change_percentage_24h > 0 ? {color: 'green !important'} : {color: 'red !important'}}>
+                          { coin.price_change_percentage_24h.toFixed(2) }%
+                        </TableCell>
+                          <TableCell align="center" className='table-cell'>${ coin.total_volume.toLocaleString() }</TableCell>
+                          <TableCell align="center" className='table-cell'>${ coin.market_cap.toLocaleString() }</TableCell>
+                          <TableCell key={coin.name}>
+                            <LineChart width={300} height={100} data={coinPricingData}>
+                            <Line type="natural" dataKey="price" stroke={priceIncrease ? "#82ca9d" : "red"} dot={false} />
+                            <Tooltip content={ Toolip } cursor={ false } wrapperStyle={{ outline: 'none' }} />
+                            <YAxis hide={true} domain={['dataMin', 'dataMax']} />
+                            </LineChart> 
+                          </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </Box>
         <TablePagination
           className='table-pagination'
           rowsPerPageOptions={[5, 10, 25]}

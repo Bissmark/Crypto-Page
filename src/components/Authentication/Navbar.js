@@ -16,7 +16,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import SearchBar from '../SearchBar';
-import TextField from '@mui/material/TextField';
 
 const Navbar = ({ setSearchQuery }) => {
   const [darkMode, setDarkMode] = useState(true);

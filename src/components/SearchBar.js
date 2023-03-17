@@ -1,9 +1,7 @@
-import { useContext, useState } from "react";
 import { TextField } from "@mui/material";
 import './SearchBar.css'
 
 const SearchBar = ({ setSearchQuery }) => {
-    //const [search, setSearch] = useContext('');
 
     const handleChange = (e) => {
         e.preventDefault();
