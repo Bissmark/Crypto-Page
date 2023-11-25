@@ -10,7 +10,6 @@ import TablePagination from '@mui/material/TablePagination';
 import Checkbox from '@mui/material/Checkbox';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import PropTypes from 'prop-types';
 import { visuallyHidden } from '@mui/utils';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
@@ -19,12 +18,6 @@ import { LineChart, Line, Tooltip, YAxis } from 'recharts';
 import {addFirestoreCollectionEntry, getFirestoreCollectionEntry } from "./firestore"
 import { TableContainer } from '@mui/material';
 import { useMediaQuery } from 'react-responsive';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import { alpha } from '@mui/material/styles';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import "./MuiTable.css"
 
 function descendingComparator(a, b, orderBy) {
@@ -35,12 +28,6 @@ function descendingComparator(a, b, orderBy) {
     return 1;
   }
   return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 function stableSort(array, comparator) {
@@ -151,7 +138,7 @@ function EnhancedTable({ searchQuery }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [coins, setCoins] = useState([]);
-  const isBigScreen = useMediaQuery({ query: '(min-width: 600px)'});
+  const isBigScreen = useMediaQuery({ query: '(min-width: 600px)' });
 
   const [values, loadingFirebase, errorFB, snaphot] = getFirestoreCollectionEntry("favourites");
 
@@ -160,14 +147,35 @@ function EnhancedTable({ searchQuery }) {
       .get(
         'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true'
       )
-      .then(res => setCoins(res.data))
-      .catch(error => console.log(error))
+      .then((res) => setCoins(res.data))
+      .catch((error) => console.log(error));
   }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
+
+    console.log(coins);
+
+    // Manual sorting based on the selected property
+    const sortedCoins = [...coins];
+    if (property === 'rank') {
+      sortedCoins.sort((a, b) => a.market_cap_rank - b.market_cap_rank);
+    } else if (property === 'name') {
+      sortedCoins.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (property === 'price') {
+      sortedCoins.sort((a, b) => b.current_price - a.current_price);
+    } else if (property === '24hr') {
+      sortedCoins.sort((a, b) => a.price_change_percentage_24h - b.price_change_percentage_24h);
+    } else if (property === 'volume') {
+      sortedCoins.sort((a, b) => a.total_volume - b.total_volume);
+    } else if (property === 'marketcap') {
+      sortedCoins.sort((a, b) => a.market_cap - b.market_cap);
+    }
+
+    // Update the state with the sorted coins
+    setCoins(order === 'desc' ? sortedCoins.reverse() : sortedCoins);
   };
 
   const handleSelectAllClick = (event) => {
@@ -192,7 +200,7 @@ function EnhancedTable({ searchQuery }) {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
+        selected.slice(selectedIndex + 1)
       );
     }
 
@@ -210,31 +218,40 @@ function EnhancedTable({ searchQuery }) {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  const Toolip = props =>  
-  (! props.active) ? null :  ( 
-  <div style={{ fontFamily: 'Montserrat',  color : 'white',  fontSize: '15px', fontWeight: 'bold' }} >
-  {props.payload.map((v, i) => <p key ={ i }>{v.value}</p>)}
-  </div> )
+  const Toolip = (props) =>
+    !props.active ? null : (
+      <div style={{ fontFamily: 'Montserrat', color: 'white', fontSize: '15px', fontWeight: 'bold' }}>
+        {props.payload.map((v, i) => (
+          <p key={i}>{v.value}</p>
+        ))}
+      </div>
+    );
 
-  const pushToFirebaseDB = (e,coin) => {
-    const {id, current_price, market_cap_rank, total_volume, market_cap, sparkline_in_7d, price_change_percentage_24h} = coin 
-    addFirestoreCollectionEntry('favourites', market_cap_rank, id, current_price, total_volume, market_cap, sparkline_in_7d, price_change_percentage_24h )
+  const pushToFirebaseDB = (e, coin) => {
+    const { id, current_price, market_cap_rank, total_volume, market_cap, sparkline_in_7d, price_change_percentage_24h } = coin;
+    addFirestoreCollectionEntry('favourites', market_cap_rank, id, current_price, total_volume, market_cap, sparkline_in_7d, price_change_percentage_24h);
     // console.log('added')
-  }
+  };
 
   const valuesAddedToDB = (coin) => {
     if (!values) {
       return false;
     }
-    let checkStatus = values?.some(value => coin.id === value.name)
+    let checkStatus = values?.some((value) => coin.id === value.name);
 
-    return checkStatus
-  }
+    return checkStatus;
+  };
 
   const priceFormatter = (price) => {
-    if(price > 0.001) return price.toLocaleString(undefined, { 'minimumFractionDigits': 2,'maximumFractionDigits': 2 })
-    if(price < 0.001) return price.toLocaleString(undefined, { 'minimumFractionDigits': 6,'maximumFractionDigits': 6 })
-  }
+    if (price > 0.001) return price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (price < 0.001) return price.toLocaleString(undefined, { minimumFractionDigits: 6, maximumFractionDigits: 6 });
+  };
+
+  const getComparator = (order, orderBy) => {
+    return order === 'desc'
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+  };
 
   return (
     <div>
