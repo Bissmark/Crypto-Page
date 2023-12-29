@@ -74,7 +74,6 @@ const headers = [
   }, 
   {
     id: 'last 7 days',
-    numeric: true,
     label: 'last 7 days'
   }
 ];
@@ -111,6 +110,9 @@ function EnhancedTableHead(props) {
             padding={header.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === header.id ? order : false}
           >
+            { header.id === 'last 7 days' ? (
+                <span style={{color: 'white'}}>{header.label}</span>
+            ) : (
             <TableSortLabel
               active={orderBy === header.id}
               direction={orderBy === header.id ? order : 'asc'}
@@ -124,6 +126,7 @@ function EnhancedTableHead(props) {
                 </Box>
               ) : null}
             </TableSortLabel>
+            )}
           </TableCell>
         ))}
       </TableRow>
@@ -175,7 +178,7 @@ function EnhancedTable({ searchQuery }) {
     }
 
     // Update the state with the sorted coins
-    setCoins(order === 'desc' ? sortedCoins.reverse() : sortedCoins);
+    setCoins(order === 'asc' ? sortedCoins.reverse() : sortedCoins);
   };
 
   const handleSelectAllClick = (event) => {

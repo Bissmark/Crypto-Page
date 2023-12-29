@@ -26,7 +26,7 @@ function Dashboard() {
       setName(data.name);
     } catch (err) {
       console.log(err);
-      alert("An error occured while fetching user data");
+      alert("An error occured while fetching user data, dashboard");
     }
   };
 
