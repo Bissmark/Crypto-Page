@@ -28,6 +28,7 @@
     border: none;
     color: white;
     background-color: black;
+    cursor: pointer;
 }
 
 .login_google {
@@ -40,6 +41,7 @@
 
 .login_forgot {
     font-size: 10px;
+    margin-bottom: 1em;
 }
 
 .login_forgot a {

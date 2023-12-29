@@ -8,6 +8,7 @@ import { getFirestoreCollectionEntry } from "../firestore";
 import axios from 'axios';
 import { InvestmentInput } from "../investmentInput";
 import { useMediaQuery } from "react-responsive";
+import Coinspot from "../Coinspot";
 
 function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
@@ -154,6 +155,7 @@ function Dashboard() {
                 }
             })}
         </div>
+        {/* <Coinspot /> */}
         </div>
       )}
     </div>
