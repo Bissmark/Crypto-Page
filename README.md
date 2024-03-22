@@ -2,38 +2,29 @@
 
 ## Introduction
 
-Here is a website where you can view the real-time updated prices of the top 100 Crypto coins. There are graphs showing how they
-have performed over the last 24 hours and 7 days. You can sign in and set up a Portfolio for yourself where you can view your
-'favourited' coins and also play a mini game of putting in a mock amount of money into each and see how much you would of lost
-or won over time.
+Welcome to the Crypto Price Tracker, a platform designed to provide real-time updates on the top 100 cryptocurrencies. Dive into the dynamic world of digital assets with comprehensive data and interactive features. Whether you're a seasoned investor or a curious enthusiast, this website offers valuable insights into crypto markets.
 
 ### How to Use
 [Crypto Pricing](https://ceegecrypto.firebaseapp.com/)
 
-You start at the home page where you see a table with the top 10 coins of the day. You can view the total coins, market cap and
-24hr volume of all coins or you can see individual coins and how they have been performing. The graph on the homepage shows how
-its performed over the last 7 days. Then you can signup or login into an account, here you will be taken to your profile page
-where you can see a portfolio. You can 'favourite' coins to show in your portfolio where you can make a mock investment to see
-how you would of performed if you had invested into it.
+Upon landing on the homepage, you'll find a table showcasing the top 10 coins of the day. Delve deeper into individual coins to analyze their performance over various timeframes, accompanied by informative graphs illustrating trends. Create an account to unlock additional features such as setting up a personalized portfolio.
 
 <p align='center'>
-    <img  src="image.png" width="600" height="200" />
+    <img src="image.png" width="600" height="200" alt="Crypto Price Tracker Screenshot"/>
 </p>
 
 ### Technologies
 
 This project has been created in React Javascript using the following libraries and other help:
-- Moment
-- Material UI
+- React
 - Firebase
-- React Bootstrap
+- CSS and HTML
+- Material UI
+- Moment
 - Axios
 - React Router Dom
 - Recharts
 - Node.js
-- CSS and HTML
-- Netlify
-
 
 ### Motivation
 
@@ -44,11 +35,12 @@ Crypto.
 
 ### Next Steps
 
-- I would actually like to take out the firebase backend and use Express or Python instead, because I want to utilize the coinspot API so I could link my account so I can view how my coins are doing, from there potentially be able to buy and sell coins from my website, but I worry slightly about security issues.
-- Fix the dark/light mode to change the navbar aswell to light/dark
-- Flesh out the practice investment game in the portfolio section
+As we continue to refine and expand the Crypto Price Tracker, here are some planned enhancements:
+
+- Transition from Firebase backend to Express or Python to integrate the CoinSpot API for account linking and trading functionalities, prioritizing security measures.
+- Implement a dynamic dark/light mode that seamlessly transforms the interface, including the navbar.
+- Enhance the portfolio section by refining the practice investment game for a more immersive experience.
 
 ### Credits
 
-Thank you to Loden, Joel and my roommate Quant for all the help they have given me over the past week and also the past 3 months
-I have come along way from when I started on TicTacToe and have been really proud of this final project
+Special thanks to Loden, Joel, and Quant for their invaluable support throughout the development journey. From humble beginnings with TicTacToe to the culmination of this project, their guidance has been instrumental in achieving milestones and overcoming challenges.
